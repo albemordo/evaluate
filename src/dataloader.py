@@ -1,9 +1,10 @@
 from __future__ import annotations
 from dataclasses import dataclass, field
-from loguru import logger
 from os import path, walk
 from pathlib import Path
 from typing import List, Union
+from src.utils import BaseEvaluationAttributes, Test, DataLoaderEntry
+
 
 DEFAULT_DATA_FOLDER = 'data'
 DEFAULT_PROMPT_FILENAME = 'prompt.txt'
@@ -15,13 +16,7 @@ DEFAULT_MODEL_FOLDER = None
 
 
 @dataclass
-class DataLoaderAttributes:
-    data_folder: str = DEFAULT_DATA_FOLDER                          # Root directory for data
-    model_folder: str = DEFAULT_MODEL_FOLDER                        # Folder from which retrieve generated outputs
-    providers_to_ignore: List[str] = field(
-        default_factory = lambda: [])                               # List of providers to ignore
-    tests_to_ignore: List[str] = field(
-        default_factory = lambda: [])                               # List of tests to ignore
+class DataLoaderAttributes(BaseEvaluationAttributes):
     prompt_filename: str = DEFAULT_PROMPT_FILENAME                  # Filename for the prompt
     generated_files_prefix: str = DEFAULT_GENERATED_FILES_PREFIX    # Standard prefix for model-generated output files
     local_generated_folder_name: str = DEFAULT_LOCAL_GENERATED_FOLDER_NAME  # Folder containing models' outputs
@@ -36,25 +31,6 @@ class FunctionalDataLoaderAttributes(DataLoaderAttributes):
 @dataclass
 class CompileCheckDataLoaderAttributes(DataLoaderAttributes):
     pass
-    
-    
-@dataclass
-class DataLoaderEntry:
-    test_name_path: Path = None
-    prompt_path: Path = None
-    tf_file_path: Path = None
-    plan_path: Path = None
-    generated_files_path: List[Path] = field(default_factory=lambda: [])
-    
-
-@dataclass
-class Test:
-    test_name: str
-    prompt: str
-    tf_file: str
-    plan: str
-    generated_files: List[str] = field(default_factory=lambda: [])
-    meta_entry: DataLoaderEntry = None
 
 
 def retrieve_path_content_if_exists(x: Path) -> Union[str, None]:
@@ -74,18 +50,32 @@ class DataLoader:
         self.test_folders = self.load_test_folders()
         self.entries = self.get_entries()
 
+
     def load_test_folders(self):
         data_path = Path(self.attrs.data_folder)
         test_folders = []
         
         # Iterating through the directory structure
         for provider in data_path.iterdir():
-            if provider.is_dir() and provider.name not in self.attrs.providers_to_ignore:
+            if self.check_provider_path_validity(provider):
                 for test_folder in provider.iterdir():
                     # Check if this is a test folder (and not the 'generated' folder)
-                    if test_folder.is_dir() and test_folder.name not in self.attrs.tests_to_ignore:
+                    if self.check_test_path_validity(test_folder):
                         test_folders.append(test_folder)
         return test_folders
+        
+        
+    def check_provider_path_validity(self, provider_folder: Path) -> bool:
+        return provider_folder.is_dir() and provider_folder.name not in self.attrs.providers_to_ignore
+    
+    
+    def check_test_path_validity(self, test_path: Path) -> bool:
+        return test_path.is_dir() and test_path.name not in self.attrs.tests_to_ignore
+    
+    
+    def check_entry_validity(self, _: DataLoaderEntry) -> bool:
+        '''Check if an entry is valid before pushing to the entries attributes. If this function returns false, the entry is not added'''
+        return True
         
         
     def get_entries(self):
@@ -105,19 +95,10 @@ class DataLoader:
                 ]
                 dataloader_entry.generated_files_path = generated_files_path
                 
-                '''
-                # Add to entries if every path exists
-                if all([
-                    pth.exists()
-                    for pth in [
-                        dataloader_entry.prompt_path,
-                        dataloader_entry.tf_file_path,
-                        dataloader_entry.plan_path     
-                    ]
-                ]):
+                
+                # Add to entries if it's valid
+                if self.check_entry_validity(dataloader_entry):
                     entries.append(dataloader_entry)
-                '''
-                entries.append(dataloader_entry)
             except Exception as e:
                 print(e)
         
