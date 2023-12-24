@@ -135,3 +135,7 @@ dmypy.json
 # Others
 .DS_Store
 Thumbs.db
+
+# Terraform
+.terraform/
+.terraform.lock.hcl
