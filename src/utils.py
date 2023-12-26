@@ -5,7 +5,7 @@ from pathlib import Path
 
 
 DEFAULT_DATA_FOLDER = 'data'
-DEFAULT_MODEL_FOLDER = None
+DEFAULT_MODEL_FOLDER = ''
 
 
 @dataclass
