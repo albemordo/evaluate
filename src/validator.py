@@ -8,6 +8,7 @@ from os import path
 DEFAULT_EVALUATION_RESULTS_FOLDER_NAME = 'results'
 DEFAULT_OVERWRITE_DUPLICATE_EVALUATION_RESULTS = False
 
+
 @dataclass
 class ValidatorAttributes(BaseEvaluationAttributes):
     evaluation_results_folder_name = DEFAULT_EVALUATION_RESULTS_FOLDER_NAME   # Folder in which output the evaluation results.
