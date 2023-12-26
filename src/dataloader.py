@@ -10,9 +10,8 @@ DEFAULT_DATA_FOLDER = 'data'
 DEFAULT_PROMPT_FILENAME = 'prompt.txt'
 DEFAULT_GENERATED_FILES_PREFIX = 'output_'
 DEFAULT_LOCAL_GENERATED_FOLDER_NAME = 'generated'
-DEFAULT_TARGET_PLAN_FILENAME = 'plan.json'
+DEFAULT_TARGET_PLAN_FILENAME = 'plan.tfplan'
 DEFAULT_TARGET_TF_FILENAME = 'main.tf'
-DEFAULT_MODEL_FOLDER = None
 
 
 @dataclass
@@ -87,13 +86,16 @@ class DataLoader:
                 dataloader_entry.prompt_path = Path(path.join(abs_test_folder, self.attrs.prompt_filename))
                 dataloader_entry.tf_file_path = Path(path.join(abs_test_folder, self.attrs.target_tf_filename))
                 dataloader_entry.plan_path = Path(path.join(abs_test_folder, self.attrs.target_plan_filename))
-                generated_files_path = Path(path.join(abs_test_folder, self.attrs.local_generated_folder_name))
-                generated_files_path = [
-                    file for file in generated_files_path.glob(
-                        self.attrs.model_folder+'/'+self.attrs.generated_files_prefix+'*'
-                    ) if file.is_file()
-                ]
-                dataloader_entry.generated_files_path = generated_files_path
+                if self.attrs.model_folder:
+                    generated_files_path = Path(path.join(abs_test_folder, self.attrs.local_generated_folder_name))
+                    generated_files_path = [
+                        file for file in generated_files_path.glob(
+                            self.attrs.model_folder+'/'+self.attrs.generated_files_prefix+'*'
+                        ) if file.is_file()
+                    ]
+                    dataloader_entry.generated_files_path = generated_files_path
+                else:
+                    dataloader_entry.generated_files_path = []
                 
                 
                 # Add to entries if it's valid
@@ -132,3 +134,28 @@ class DataLoader:
         entry = self.entries[idx]
         test = self.entry_to_output(entry)
         return test
+    
+
+class CompileCheckDataLoader(DataLoader):
+    def check_entry_validity(self, entry: DataLoaderEntry) -> bool:
+        '''Check if an entry contains valid generated files before pushing to the entries attributes. If this function returns false, the entry is not added'''
+        gen_files_valid = all([file_path.exists() and file_path.is_file() for file_path in entry.generated_files_path])
+        return gen_files_valid
+    
+    
+class FunctionalCorrectnessDataLoader(CompileCheckDataLoader):
+    def check_entry_validity(self, entry: DataLoaderEntry) -> bool:
+        '''Check if an entry contains valid target plan and generated files before pushing to the entries attributes. If this function returns false, the entry is not added'''
+        compile_check_valid = super().check_entry_validity(entry)
+        target_plan_valid = entry.plan_path.exists() and entry.plan_path.is_file()
+        
+        return all([compile_check_valid, target_plan_valid])
+    
+    
+class GenerationDataLoader(DataLoader):
+    '''This DataLoader is used for model inference'''
+    def check_entry_validity(self, entry: DataLoaderEntry) -> bool:
+        '''Check if an entry contains valid prompt before pushing to the entries attributes. If this function returns false, the entry is not added'''
+        prompt_valid = entry.prompt_path.exists() and entry.prompt_path.is_file()
+        
+        return prompt_valid
