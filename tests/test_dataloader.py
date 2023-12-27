@@ -78,7 +78,7 @@ class TestGeneratedFilesFolders:
                 prompt_target_content = '# data/aws/provider_block/prompt.txt'
                 plan_target_content = '{}'
                 # Assertion
-                assert item.generated_files == output_files_content
+                assert sorted(item.generated_files) == sorted(output_files_content)
                 assert item.plan == plan_target_content
                 assert item.tf_file == main_tf_target_content
                 assert item.prompt == prompt_target_content
