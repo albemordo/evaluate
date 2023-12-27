@@ -152,7 +152,7 @@ class FunctionalCorrectnessDataLoader(CompileCheckDataLoader):
         return all([compile_check_valid, target_plan_valid])
     
     
-class GenerationDataLoader(DataLoader):
+class PromptDataLoader(DataLoader):
     '''This DataLoader is used for model inference'''
     def check_entry_validity(self, entry: DataLoaderEntry) -> bool:
         '''Check if an entry contains valid prompt before pushing to the entries attributes. If this function returns false, the entry is not added'''
