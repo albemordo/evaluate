@@ -2,6 +2,10 @@ from typing import Union, List
 from pathlib import Path
 from src.dataloader import DataLoader, DataLoaderAttributes, PromptDataLoader
 
+
+DATA_FOLDER = 'tests/test_dataloader/data'
+
+
 def Path_to_str(x: Union[List[str], List[Path]], relative_to_folder: str) -> List[str]:
     if len(x) > 0:
         if isinstance(x[0], Path):  return [str(i.relative_to(relative_to_folder)) for i in x]
@@ -24,7 +28,7 @@ def match_folders(input_folders, target_folders, relative_to_folder, strict=True
 class TestTestFolder:
     '''Operations to retrieve and filter test folders'''
     def test_no_filters(self):
-        attrs = DataLoaderAttributes(data_folder='tests/data')
+        attrs = DataLoaderAttributes(data_folder=DATA_FOLDER)
         dataloader = DataLoader(attrs)
         
         true_test_folders = [
@@ -37,7 +41,7 @@ class TestTestFolder:
         
         
     def test_provider_filters(self):
-        attrs = DataLoaderAttributes(data_folder='tests/data', providers_to_ignore=['aws'])
+        attrs = DataLoaderAttributes(data_folder=DATA_FOLDER, providers_to_ignore=['aws'])
         dataloader = DataLoader(attrs)
         
         true_test_folders = [
@@ -48,7 +52,7 @@ class TestTestFolder:
         
 
     def test_tests_filters(self):
-        attrs = DataLoaderAttributes(data_folder='tests/data', tests_to_ignore=['instance_simple'])
+        attrs = DataLoaderAttributes(data_folder=DATA_FOLDER, tests_to_ignore=['instance_simple'])
         dataloader = DataLoader(attrs)
         
         true_test_folders = [
@@ -63,7 +67,7 @@ class TestGeneratedFilesFolders:
     '''Operations on model-generated files: data/PROVDER/TEST/generated/MODEL/output_*'''
     def test_one_test_no_filters(self):
         attrs = DataLoaderAttributes(
-            data_folder='tests/data',
+            data_folder=DATA_FOLDER,
             model_folder='model_x')
         
         dataloader = DataLoader(attrs)
@@ -90,7 +94,7 @@ class TestGeneratedFilesFolders:
 class TestPromptDataLoader:
     def test_with_folders_with_valid_and_invalid_prompt(self):
         attrs = DataLoaderAttributes(
-            data_folder='tests/data')
+            data_folder=DATA_FOLDER)
         
         dataloader = PromptDataLoader(attrs)
         expected_folders = ['prompt_only/test_1', 'prompt_only/test_2']

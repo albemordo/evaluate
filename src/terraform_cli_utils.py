@@ -31,6 +31,7 @@ class CLICommand:
 
     def run(self):
         args = filter(None, [self.main_command, self.global_options, self.command, self.command_options, self.command_argument])
+        args = ' '.join(args).split(' ')    # ['arg1', 'arg2 arg3'] -> ['arg1', 'arg2', 'arg3']
         process = subprocess.run(args=list(args), **self.subprocess_args)
         text_output = process.stdout if process.returncode == 0 else process.stderr
         return int(process.returncode), str(text_output)
