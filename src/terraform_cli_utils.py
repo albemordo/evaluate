@@ -80,14 +80,18 @@ class TerraformValidateCommandExecutor(TerraformCommandExecutor):
 
 # Terraform Plan Command Executor
 class TerraformPlanCommandExecutor(TerraformCommandExecutor):
-    def __init__(self, directory: Path, json=False, input=False):
+    def __init__(self, directory: Path, json=False, input=False, out=True, plan_name='plan.tfplan'):
         super().__init__(directory)
         options = ""
 
         if json:
             options += "-json "
         if not input:
-            options += "-input=false"
+            options += "-input=false "
+        if out and plan_name:
+            options += f"-out={plan_name}"
+        elif out and not plan_name:
+            raise ValueError('Plan name must be defined')
 
         self.cli_command.set_command('plan', options.strip())
 
