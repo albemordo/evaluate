@@ -1,6 +1,6 @@
 from typing import Union, List
 from pathlib import Path
-from src.dataloader import DataLoader, DataLoaderAttributes, GenerationDataLoader
+from src.dataloader import DataLoader, DataLoaderAttributes, PromptDataLoader
 
 def Path_to_str(x: Union[List[str], List[Path]], relative_to_folder: str) -> List[str]:
     if len(x) > 0:
@@ -92,7 +92,7 @@ class TestPromptDataLoader:
         attrs = DataLoaderAttributes(
             data_folder='tests/data')
         
-        dataloader = GenerationDataLoader(attrs)
+        dataloader = PromptDataLoader(attrs)
         expected_folders = ['prompt_only/test_1', 'prompt_only/test_2']
         
         # Match valid prompt folders
