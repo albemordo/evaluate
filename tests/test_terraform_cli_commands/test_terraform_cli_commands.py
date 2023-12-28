@@ -8,6 +8,7 @@ from pathlib import Path
 from os import path
 from typing import Any
 import json
+import pytest
 
 
 DATA_FOLDER = 'tests/test_terraform_cli_commands/'
@@ -71,16 +72,20 @@ def do_show_plan(directory: str, expected_result=True, target_plan: dict[str, An
         assert success
         assert check_json_equality(input_config, target_config)
         
+        
 def check_json_equality(input_json: dict[str, Any], target_json: dict[str, Any], strict_check=False) -> bool:
     if strict_check:    return input_json == target_json
     equality = all([input_json[key] == target_json[key] for key in target_json])
     return equality
 
+
+@pytest.mark.terraform_cli_commands
 class TestInitCommand:
     def test_init_existing_directory(self):
         do_init_terraform(path.join(VALID_DATA_FOLDER, 'aws_provider_only/'))
         
-
+        
+@pytest.mark.terraform_cli_commands
 class TestValidateCommand:
     def do_validate_invalid_files(self, dir):
         do_validate_terraform(dir, expected_result=False)
@@ -92,6 +97,7 @@ class TestValidateCommand:
         do_validate_terraform(path.join(VALID_DATA_FOLDER, 'aws_provider_only/'))
         
 
+@pytest.mark.terraform_cli_commands
 class TestPlanCommand:
     def test_valid_configuration(self):
         do_generate_plan(path.join(VALID_DATA_FOLDER, 'aws_bucket'))
@@ -100,7 +106,8 @@ class TestPlanCommand:
     def test_invalid_configuration(self):
         do_generate_plan(path.join(INVALID_DATA_FOLDER, 'generate_plan'), expected_result=False)
         
-        
+
+@pytest.mark.terraform_cli_commands
 class TestShowCommand:
     def test_valid_plan(self):
         folder = path.join(VALID_DATA_FOLDER, 'show_plan')

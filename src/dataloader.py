@@ -3,7 +3,8 @@ from dataclasses import dataclass, field
 from os import path, walk
 from pathlib import Path
 from typing import List, Union
-from src.utils import BaseEvaluationAttributes, Test, DataLoaderEntry
+from src.utils import DataTreeAttributes, Test, DataLoaderEntry
+from loguru import logger
 
 
 DEFAULT_DATA_FOLDER = 'data'
@@ -15,21 +16,12 @@ DEFAULT_TARGET_TF_FILENAME = 'main.tf'
 
 
 @dataclass
-class DataLoaderAttributes(BaseEvaluationAttributes):
+class DataLoaderAttributes(DataTreeAttributes):
     prompt_filename: str = DEFAULT_PROMPT_FILENAME                  # Filename for the prompt
     generated_files_prefix: str = DEFAULT_GENERATED_FILES_PREFIX    # Standard prefix for model-generated output files
     local_generated_folder_name: str = DEFAULT_LOCAL_GENERATED_FOLDER_NAME  # Folder containing models' outputs
     target_plan_filename: str = DEFAULT_TARGET_PLAN_FILENAME                # Target (ground_truth) plan name
     target_tf_filename: str = DEFAULT_TARGET_TF_FILENAME                    # Target tf file name
-   
-    
-@dataclass
-class FunctionalDataLoaderAttributes(DataLoaderAttributes):
-    pass
-    
-@dataclass
-class CompileCheckDataLoaderAttributes(DataLoaderAttributes):
-    pass
 
 
 def retrieve_path_content_if_exists(x: Path) -> Union[str, None]:
@@ -71,10 +63,14 @@ class DataLoader:
     def check_test_path_validity(self, test_path: Path) -> bool:
         return test_path.is_dir() and test_path.name not in self.attrs.tests_to_ignore
     
-    
-    def check_entry_validity(self, _: DataLoaderEntry) -> bool:
-        '''Check if an entry is valid before pushing to the entries attributes. If this function returns false, the entry is not added'''
+    def do_check_entry_validity(self, entry: DataLoaderEntry) -> bool:
         return True
+    
+    def check_entry_validity(self, entry: DataLoaderEntry) -> bool:
+        '''Check if an entry is valid before pushing to the entries attributes. If this function returns false, the entry is not added'''
+        validity = self.do_check_entry_validity(entry)
+        logger.trace(f"[{self.__class__.__name__}] Entry {entry.test_name_path.absolute()} validity: {validity}")
+        return validity
         
         
     def get_entries(self):
@@ -137,14 +133,14 @@ class DataLoader:
     
 
 class CompileCheckDataLoader(DataLoader):
-    def check_entry_validity(self, entry: DataLoaderEntry) -> bool:
+    def do_check_entry_validity(self, entry: DataLoaderEntry) -> bool:
         '''Check if an entry contains valid generated files before pushing to the entries attributes. If this function returns false, the entry is not added'''
         gen_files_valid = all([file_path.exists() and file_path.is_file() for file_path in entry.generated_files_path])
         return gen_files_valid
     
     
 class FunctionalCorrectnessDataLoader(CompileCheckDataLoader):
-    def check_entry_validity(self, entry: DataLoaderEntry) -> bool:
+    def do_check_entry_validity(self, entry: DataLoaderEntry) -> bool:
         '''Check if an entry contains valid target plan and generated files before pushing to the entries attributes. If this function returns false, the entry is not added'''
         compile_check_valid = super().check_entry_validity(entry)
         target_plan_valid = entry.plan_path.exists() and entry.plan_path.is_file()
@@ -154,7 +150,7 @@ class FunctionalCorrectnessDataLoader(CompileCheckDataLoader):
     
 class PromptDataLoader(DataLoader):
     '''This DataLoader is used for model inference'''
-    def check_entry_validity(self, entry: DataLoaderEntry) -> bool:
+    def do_check_entry_validity(self, entry: DataLoaderEntry) -> bool:
         '''Check if an entry contains valid prompt before pushing to the entries attributes. If this function returns false, the entry is not added'''
         prompt_valid = entry.prompt_path.exists() and entry.prompt_path.is_file()
         

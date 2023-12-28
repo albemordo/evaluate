@@ -1,6 +1,7 @@
 from typing import Union, List
 from pathlib import Path
 from src.dataloader import DataLoader, DataLoaderAttributes, PromptDataLoader
+import pytest
 
 
 DATA_FOLDER = 'tests/test_dataloader/data'
@@ -25,6 +26,7 @@ def match_folders(input_folders, target_folders, relative_to_folder, strict=True
                 assert folder in input_folders
     
 
+@pytest.mark.dataloader
 class TestTestFolder:
     '''Operations to retrieve and filter test folders'''
     def test_no_filters(self):
@@ -62,7 +64,8 @@ class TestTestFolder:
         
         match_folders(dataloader.test_folders, true_test_folders, relative_to_folder=dataloader.attrs.data_folder, strict=False)
         
-        
+
+@pytest.mark.dataloader
 class TestGeneratedFilesFolders:
     '''Operations on model-generated files: data/PROVDER/TEST/generated/MODEL/output_*'''
     def test_one_test_no_filters(self):
@@ -90,7 +93,8 @@ class TestGeneratedFilesFolders:
         # Should not reach this point
         #assert False, "Test should not reach this point. The requested test is not found."
         
-        
+
+@pytest.mark.dataloader    
 class TestPromptDataLoader:
     def test_with_folders_with_valid_and_invalid_prompt(self):
         attrs = DataLoaderAttributes(

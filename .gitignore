@@ -140,3 +140,8 @@ Thumbs.db
 .terraform/
 .terraform.lock*
 *.tfstate
+
+.env*
+.flaskenv*
+!.env.project
+!.env.vault

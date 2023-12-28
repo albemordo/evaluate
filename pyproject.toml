@@ -1,0 +1,10 @@
+[tool.pytest.ini_options]
+markers = [
+    "argparse: tests regarding argument parsing (deselect with '-m \"not argparse\"')",
+    "bnb_config",
+    "autopeftmodel",
+    "dataloader",
+    "autotokenizer",
+    "terraform_cli_commands",
+    "debug"
+]
