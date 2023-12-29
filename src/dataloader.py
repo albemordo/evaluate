@@ -7,21 +7,9 @@ from src.utils import DataTreeAttributes, Test, DataLoaderEntry
 from loguru import logger
 
 
-DEFAULT_DATA_FOLDER = 'data'
-DEFAULT_PROMPT_FILENAME = 'prompt.txt'
-DEFAULT_GENERATED_FILES_PREFIX = 'output_'
-DEFAULT_LOCAL_GENERATED_FOLDER_NAME = 'generated'
-DEFAULT_TARGET_PLAN_FILENAME = 'plan.tfplan'
-DEFAULT_TARGET_TF_FILENAME = 'main.tf'
-
-
 @dataclass
 class DataLoaderAttributes(DataTreeAttributes):
-    prompt_filename: str = DEFAULT_PROMPT_FILENAME                  # Filename for the prompt
-    generated_files_prefix: str = DEFAULT_GENERATED_FILES_PREFIX    # Standard prefix for model-generated output files
-    local_generated_folder_name: str = DEFAULT_LOCAL_GENERATED_FOLDER_NAME  # Folder containing models' outputs
-    target_plan_filename: str = DEFAULT_TARGET_PLAN_FILENAME                # Target (ground_truth) plan name
-    target_tf_filename: str = DEFAULT_TARGET_TF_FILENAME                    # Target tf file name
+    pass
 
 
 def retrieve_path_content_if_exists(x: Path) -> Union[str, None]:
@@ -130,6 +118,9 @@ class DataLoader:
         entry = self.entries[idx]
         test = self.entry_to_output(entry)
         return test
+    
+    def __len__(self) -> int:
+        return len(self.entries)
     
 
 class CompileCheckDataLoader(DataLoader):

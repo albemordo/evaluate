@@ -1,16 +1,19 @@
 from transformers import BitsAndBytesConfig
-from typing import List
 from dataclasses import dataclass
 import torch
 
 
 @dataclass
-class AutoPeftModelAttributes:
+class AutoModelAttributes:
     pretrained_model_name_or_path: str
-    adapter_name: str = 'default'
     quantization_config: BitsAndBytesConfig = None
     trust_remote_code: bool = True
     token: bool = True
+    
+
+@dataclass
+class AutoPeftModelAttributes(AutoModelAttributes):
+    adapter_name: str = 'default'
     
     
 @dataclass

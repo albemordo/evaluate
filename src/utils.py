@@ -6,6 +6,11 @@ from pathlib import Path
 
 DEFAULT_DATA_FOLDER = 'data'
 DEFAULT_MODEL_FOLDER = ''
+DEFAULT_PROMPT_FILENAME = 'prompt.txt'
+DEFAULT_GENERATED_FILES_PREFIX = 'output_'
+DEFAULT_LOCAL_GENERATED_FOLDER_NAME = 'generated'
+DEFAULT_TARGET_PLAN_FILENAME = 'plan.tfplan'
+DEFAULT_TARGET_TF_FILENAME = 'main.tf'
 
 
 @dataclass
@@ -16,6 +21,12 @@ class DataTreeAttributes:
         default_factory = lambda: [])                               # List of providers to ignore
     tests_to_ignore: List[str] = field(
         default_factory = lambda: [])                               # List of tests to ignore
+    #########
+    prompt_filename: str = DEFAULT_PROMPT_FILENAME                  # Filename for the prompt
+    generated_files_prefix: str = DEFAULT_GENERATED_FILES_PREFIX    # Standard prefix for model-generated output files
+    local_generated_folder_name: str = DEFAULT_LOCAL_GENERATED_FOLDER_NAME  # Folder containing models' outputs
+    target_plan_filename: str = DEFAULT_TARGET_PLAN_FILENAME                # Target (ground_truth) plan name
+    target_tf_filename: str = DEFAULT_TARGET_TF_FILENAME                    # Target tf file name
     
     
 @dataclass
@@ -29,10 +40,11 @@ class DataLoaderEntry:
     
 @dataclass
 class Test:
-    test_name: str
-    prompt: str
-    tf_file: str
-    plan: str
+    __test__ = False
+    test_name: str = ''
+    prompt: str = ''
+    tf_file: str = ''
+    plan: str = ''
     generated_files: List[str] = field(default_factory=lambda: [])
     meta_entry: DataLoaderEntry = None
     

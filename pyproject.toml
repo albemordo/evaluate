@@ -6,5 +6,6 @@ markers = [
     "dataloader",
     "autotokenizer",
     "terraform_cli_commands",
+    "model_generation",
     "debug"
 ]
