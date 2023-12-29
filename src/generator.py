@@ -128,7 +128,8 @@ class LLMInferenceGenerator:
         if absolute_model_output_path.exists() and self.delete_duplicate_model_outputs_folder:
             logger.info(f"Eliminating directory {absolute_model_output_path}")
             rmtree(str(absolute_model_output_path))
-        else:   absolute_model_output_path.mkdir(exist_ok=True)
+        # Create if not exists
+        absolute_model_output_path.mkdir(exist_ok=True)
         
         # Model inference
         output_texts = self.model_wrapper.generate(item.prompt)

@@ -13,6 +13,7 @@ MODEL_REPO = "ybelkada/opt-350m-lora"
 TOKENIZER_REPO = 'facebook/opt-350m'
 
 
+@pytest.mark.debug
 class TestInferenceGenerstor:
     def test_inf_gen(self):
         dataloader_attrs = DataLoaderAttributes(DATA_DIR, model_folder='modelx')
@@ -25,11 +26,11 @@ class TestInferenceGenerstor:
         generator = LLMInferenceGenerator(
             data_tree_attributes=DataTreeAttributes(
                 data_folder=DATA_DIR,
-                model_folder='modelx'
+                model_folder='model_fanto'
             ),
             dataloader=dataloader,
             model_wrapper=model_wrapper,
             delete_duplicate_model_outputs_folder=True
         )
         
-        
+        generator.run()
