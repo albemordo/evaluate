@@ -6,8 +6,10 @@ from dataclasses import dataclass, asdict
 from src.utils import dict_to_arglist, check_dict_equality
 from src.huggingface_utils import AutoPeftModelAttributes
 from dotenv import find_dotenv, load_dotenv
+from loguru import logger
 import pytest
 import torch
+
 
 load_dotenv(find_dotenv())
 

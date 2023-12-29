@@ -98,11 +98,11 @@ class DataLoader:
                 if self.check_entry_validity(dataloader_entry):
                     entries.append(dataloader_entry)
             except Exception as e:
-                print(e)
+                logger.warning(e)
         
         return entries
     
-    
+
     def entry_to_output(self, entry: DataLoaderEntry) -> Test:
         '''Convert DataLoaderEntry objects having Path attributes to Test objects having the content as attributes instead'''
         try:
@@ -123,7 +123,7 @@ class DataLoader:
                 meta_entry=entry
             )
         except Exception as e:
-            print(e)
+            logger.warning(e)
 
     
     def __getitem__(self, idx: int) -> Test:
