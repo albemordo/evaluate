@@ -71,8 +71,8 @@ class ModelWrapper:
     def load_model(self, attrs: AutoModelAttributes, **kwargs):
         logger.info(f'Loading model from {attrs.pretrained_model_name_or_path} ({type(self.AutoModelCLS).__name__})')
         self.model = self._load_model(attrs, **kwargs)
-        self.model.eval()
         to_cuda_or_cpu(self.model)
+        logger.info(self.model)
         
         
     def _load_model(self, attrs: AutoModelAttributes, **kwargs) -> PreTrainedModel:
