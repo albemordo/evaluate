@@ -152,7 +152,7 @@ class LLMInferenceGenerator:
             logger.trace(f"Eliminating directory {absolute_model_output_path}")
             rmtree(str(absolute_model_output_path))
         # Create if not exists
-        absolute_model_output_path.mkdir(exist_ok=True)
+        absolute_model_output_path.mkdir(exist_ok=True, parents=True)
         
         # Model inference
         output_texts = self.model_wrapper.generate(item.prompt)
