@@ -88,6 +88,7 @@ class ModelWrapper:
     def _generate(self, prompt: str, **kwargs):
         inputs = self.tokenizer(prompt, return_tensors='pt')
         to_cuda_or_cpu(inputs)
+        logger.info(inputs)
         with torch.no_grad():
             outputs = self.model.generate(**inputs, 
                                       eos_token_id=self.model.config.eos_token_id,
