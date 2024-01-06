@@ -60,7 +60,7 @@ parser.add_arguments(AutoTokenizerAttributes, 'autotokenizer_attributes')
 @pytest.mark.autotokenizer
 class TestAutoTokenizer:
     def test_load_tokenizer(self):
-        attrs = dict(pretrained_model_name_or_path=TOKENIZER_REPO)
+        attrs = dict(tokenizer_name_or_path=TOKENIZER_REPO)
         argv = dict_to_arglist(attrs)
         parsed_args = parser.parse_known_args(argv)[0]
         autotokenizer_attrs = parsed_args.autotokenizer_attributes

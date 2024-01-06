@@ -11,9 +11,9 @@ import json
 import pytest
 
 
-DATA_FOLDER = 'tests/test_terraform_cli_commands/'
-VALID_DATA_FOLDER = 'tests/test_terraform_cli_commands/valid/'
-INVALID_DATA_FOLDER = 'tests/test_terraform_cli_commands/invalid/'
+DATA_FOLDER = 'tests/test_terraform/'
+VALID_DATA_FOLDER = 'tests/test_terraform/valid/'
+INVALID_DATA_FOLDER = 'tests/test_terraform/invalid/'
 
 
 def do_validate_terraform(directory: str, expected_result=True, init=True):
@@ -79,12 +79,14 @@ def check_json_equality(input_json: dict[str, Any], target_json: dict[str, Any],
     return equality
 
 
+@pytest.mark.terraform
 @pytest.mark.terraform_cli_commands
 class TestInitCommand:
     def test_init_existing_directory(self):
         do_init_terraform(path.join(VALID_DATA_FOLDER, 'aws_provider_only/'))
         
-        
+
+@pytest.mark.terraform
 @pytest.mark.terraform_cli_commands
 class TestValidateCommand:
     def do_validate_invalid_files(self, dir):
@@ -97,6 +99,7 @@ class TestValidateCommand:
         do_validate_terraform(path.join(VALID_DATA_FOLDER, 'aws_provider_only/'))
         
 
+@pytest.mark.terraform
 @pytest.mark.terraform_cli_commands
 class TestPlanCommand:
     def test_valid_configuration(self):
@@ -107,6 +110,7 @@ class TestPlanCommand:
         do_generate_plan(path.join(INVALID_DATA_FOLDER, 'generate_plan'), expected_result=False)
         
 
+@pytest.mark.terraform
 @pytest.mark.terraform_cli_commands
 class TestShowCommand:
     def test_valid_plan(self):

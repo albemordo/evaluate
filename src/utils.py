@@ -72,6 +72,5 @@ def check_dict_equality(input_dict: dict[str, Any], target_dict: dict[str, Any],
 def parse_argv(config: List[Tuple[Type, str]], argv: List[str] = sys.argv):
     parser = ArgumentParser()
     [parser.add_arguments(t, s) for t, s in config]
-    print([w.dataclass for w in parser._wrappers])
     args, _ = parser.parse_known_args(argv)
     return args

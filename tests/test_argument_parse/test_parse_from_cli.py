@@ -3,7 +3,6 @@ from src.utils import parse_argv, dict_to_arglist, DataTreeAttributes
 from typing import List, Type, Tuple
 import src.generate as generate
 import pytest
-import sys
 
 
 cli_attributes = dict(
@@ -28,7 +27,7 @@ class TestParseCliArgs:
         # Parsing
         args = parse_argv(argparse_config, dict_to_arglist(cli_attributes))
         automodel_attrs: AutoPeftModelAttributes = getattr(args, generate.AUTOMODEL_ATTRIBUTES_KEY)
-        autotokenizer_attrs = getattr(args, generate.AUTOMODEL_ATTRIBUTES_KEY)
+        autotokenizer_attrs: AutoTokenizerAttributes = getattr(args, generate.AUTOTOKENIZER_ATTRIBUTES_KEY)
         dataloader_attrs: DataTreeAttributes = getattr(args, generate.DATA_TREE_ATTRIBUTES_KEY)
         quantization_attrs: QuantizationConfig = getattr(args, generate.QUANTIZATION_ATTRIBUTES_KEY, None)
         # Assertion
@@ -37,3 +36,4 @@ class TestParseCliArgs:
         assert automodel_attrs.pretrained_model_name_or_path == cli_attributes.get('pretrained_model_name_or_path')
         assert automodel_attrs.adapter_name == cli_attributes.get('adapter_name')
         assert quantization_attrs.load_in_4bit == cli_attributes.get('load_in_4bit')
+        assert autotokenizer_attrs.pretrained_model_name_or_path == cli_attributes.get('tokenizer_name_or_path')

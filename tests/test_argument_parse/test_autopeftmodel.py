@@ -76,7 +76,7 @@ class TestAutoPeftModelArgparse:
         
     # Should be run on GPU environment, because quantization needs it.
     def test_load_model_from_hub_and_quantize(self):
-        if torch.cuda_is_available():
+        if torch.cuda.is_available():
             quant_config = BitsAndBytesConfig(
                 load_in_4bit=True,
                 bnb_4bit_compute_dtype=torch.float16,

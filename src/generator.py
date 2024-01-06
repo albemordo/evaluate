@@ -1,11 +1,12 @@
 from dataclasses import dataclass, asdict
-from src.dataloader import PromptDataLoader, DataLoader
+from src.dataloader import DataLoader
 from src.utils import DataTreeAttributes, Test
 from src.huggingface_utils import (
     AutoModelAttributes,
     AutoPeftModelAttributes, 
     AutoTokenizerAttributes, 
-    QuantizationConfig)
+    QuantizationConfig,
+    GenerationConfig)
 from loguru import logger
 from shutil import rmtree
 from os import path
@@ -13,10 +14,14 @@ from tqdm import tqdm
 from functools import reduce
 from typing import Callable, List
 from peft import AutoPeftModelForCausalLM, PeftModel
+from pathlib import Path
 from transformers import PreTrainedModel, PreTrainedTokenizer, AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 import torch    
+import sys
+    
     
 TextPreprocessor = Callable[[str], str]
+PROMPT_TEMPLATE_PROMPT_KEYWORD = 'prompt'
 
 
 def to_cuda_or_cpu(x):
@@ -26,6 +31,7 @@ def to_cuda_or_cpu(x):
 class ModelWrapper:
     model: PreTrainedModel
     tokenizer: PreTrainedTokenizer
+    generation_config: GenerationConfig
     AutoModelCLS = AutoModelForCausalLM
     AutoTokenizerCLS = AutoTokenizer
     
@@ -33,21 +39,29 @@ class ModelWrapper:
     def __init__(self,
                  automodel_attributes: AutoModelAttributes, 
                  autotokenizer_attributes: AutoTokenizerAttributes,
+                 generation_config: GenerationConfig,
                  quantization_config: QuantizationConfig = None,
                  preprocessors: List[TextPreprocessor] = []):
         # Check for quantization options
-        if (quantization_config is not None):
-            logger.info('Detected quantization config')
-            #automodel_attributes.quantization_config = BitsAndBytesConfig(**asdict(quantization_config))
+        if (quantization_config is not None):   logger.info('Detected quantization config')
             
         # Load model
-        self.load_model(automodel_attributes, quantization_config = BitsAndBytesConfig(**asdict(quantization_config)))
+        bnb_conf = BitsAndBytesConfig(**asdict(quantization_config)) if quantization_config else None
+        self.load_model(automodel_attributes, quantization_config = bnb_conf)
         
         # Load tokenizer
         self.load_tokenizer(autotokenizer_attributes)
         
+        self.generation_config = generation_config
         self.preprocessors = preprocessors
         
+        # Prompt template formatting
+        if self.generation_config.prompt_template_path:
+            template = Path(self.generation_config.prompt_template_path).read_text()
+            del self.generation_config.prompt_template_path
+            format_fn = lambda prompt: template.format(prompt=prompt)
+            self.preprocessors.append(format_fn)
+            
         
     def load_tokenizer(self, attrs: AutoTokenizerAttributes):
         logger.info(f'Loading tokenizer from {attrs.pretrained_model_name_or_path} ({type(self.AutoTokenizerCLS).__name__})')
@@ -62,7 +76,6 @@ class ModelWrapper:
         
         
     def _load_model(self, attrs: AutoModelAttributes, **kwargs) -> PreTrainedModel:
-        print(asdict(attrs))
         model = self.AutoModelCLS.from_pretrained(**asdict(attrs), **kwargs)
         return model
     
@@ -99,7 +112,7 @@ class ModelWrapper:
     def generate(self, prompt: str, **kwargs):
         logger.trace(f'Generating input for prompt\n{prompt}\n')
         prompt = self.preprocess_prompt(prompt) # Preprocess
-        outputs = self._generate(prompt=prompt, **kwargs)
+        outputs = self._generate(prompt=prompt, **asdict(self.generation_config), **kwargs)
         text = self.postprocess_model_output(outputs)
         return text
 
@@ -111,8 +124,9 @@ class PeftModelWrapper(ModelWrapper):
     def __init__(self,
                 automodel_attributes: AutoPeftModelAttributes, 
                 autotokenizer_attributes: AutoTokenizerAttributes,
+                generation_config: GenerationConfig,
                 quantization_config: QuantizationConfig = None):
-        super().__init__(automodel_attributes, autotokenizer_attributes, quantization_config)
+        super().__init__(automodel_attributes, autotokenizer_attributes, generation_config, quantization_config)
         
         
 class LLMInferenceGenerator:
@@ -135,7 +149,7 @@ class LLMInferenceGenerator:
         
         # Check if to eliminate directory
         if absolute_model_output_path.exists() and self.delete_duplicate_model_outputs_folder:
-            logger.info(f"Eliminating directory {absolute_model_output_path}")
+            logger.trace(f"Eliminating directory {absolute_model_output_path}")
             rmtree(str(absolute_model_output_path))
         # Create if not exists
         absolute_model_output_path.mkdir(exist_ok=True)
@@ -144,13 +158,16 @@ class LLMInferenceGenerator:
         output_texts = self.model_wrapper.generate(item.prompt)
         
         # Output saving
-        logger.info('Saving files')
-        for i, text in tqdm(enumerate(output_texts)):
-            file_name = str(self.data_tree_attributes.generated_files_prefix)+str(i)    # output_x
-            output_file_path = absolute_model_output_path.joinpath(file_name).absolute()
-            logger.trace(f'Saving file {output_file_path}')
-            output_file_path.touch()            # create file
-            output_file_path.write_text(text)   # write to file
+        with tqdm(total=len(output_texts), position=0, leave=False) as pbar:
+            for i, text in enumerate(output_texts):
+                file_name = str(self.data_tree_attributes.generated_files_prefix)+str(i)    # output_x
+                output_file_path = absolute_model_output_path.joinpath(file_name).absolute()
+                logger.trace(f'Saving file {output_file_path}')
+                output_file_path.touch()            # create file
+                output_file_path.write_text(text)   # write to file
+                
+                pbar.update()
+                pbar.refresh()
     
     
     def run(self):
