@@ -10,6 +10,7 @@ cli_attributes = dict(
     data_folder='tests/test_model_generation/data',
     model_folder='lol',
     pretrained_model_name_or_path='dummy_path',
+    tokenizer_name_or_path='duummy_path',
     adapter_name='fanto',
     load_in_4bit=True,
 )
@@ -22,12 +23,12 @@ class TestParseCliArgs:
         argparse_config: List[Tuple[Type, str]] = []
         argparse_config.append((DataTreeAttributes, generate.DATA_TREE_ATTRIBUTES_KEY))
         argparse_config.append((AutoPeftModelAttributes, generate.AUTOMODEL_ATTRIBUTES_KEY))
-        #argparse_config.append((AutoTokenizerAttributes, generate.AUTOTOKENIZER_ATTRIBUTES_KEY))
+        argparse_config.append((AutoTokenizerAttributes, generate.AUTOTOKENIZER_ATTRIBUTES_KEY))
         argparse_config.append((QuantizationConfig, generate.QUANTIZATION_ATTRIBUTES_KEY))
         # Parsing
         args = parse_argv(argparse_config, dict_to_arglist(cli_attributes))
         automodel_attrs: AutoPeftModelAttributes = getattr(args, generate.AUTOMODEL_ATTRIBUTES_KEY)
-        #autotokenizer_attrs = getattr(args, generate.AUTOMODEL_ATTRIBUTES_KEY)
+        autotokenizer_attrs = getattr(args, generate.AUTOMODEL_ATTRIBUTES_KEY)
         dataloader_attrs: DataTreeAttributes = getattr(args, generate.DATA_TREE_ATTRIBUTES_KEY)
         quantization_attrs: QuantizationConfig = getattr(args, generate.QUANTIZATION_ATTRIBUTES_KEY, None)
         # Assertion

@@ -2,7 +2,7 @@ from src.generator import LLMInferenceGenerator
 from src.utils import DataTreeAttributes       
 from src.dataloader import PromptDataLoader, DataLoaderAttributes
 from src.generator import PeftModelWrapper
-from src.huggingface_utils import AutoPeftModelAttributes, AutoTokenizerAttributes 
+from src.huggingface_utils import AutoPeftModelAttributes, AutoTokenizerAttributes, QuantizationConfig
 import pytest
 
 
@@ -17,10 +17,11 @@ class TestInferenceGenerstor:
     def test_inf_gen_no_quant(self):
         dataloader_attrs = DataLoaderAttributes(DATA_DIR, model_folder='modelx')
         dataloader = PromptDataLoader(dataloader_attrs)
-        
+        quant_config = QuantizationConfig()
         model_wrapper = PeftModelWrapper(
             automodel_attributes=AutoPeftModelAttributes(MODEL_REPO),
-            autotokenizer_attributes=AutoTokenizerAttributes(TOKENIZER_REPO))
+            autotokenizer_attributes=AutoTokenizerAttributes(TOKENIZER_REPO),
+            quantization_config=quant_config)
         
         generator = LLMInferenceGenerator(
             data_tree_attributes=DataTreeAttributes(

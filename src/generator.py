@@ -17,7 +17,11 @@ from transformers import PreTrainedModel, PreTrainedTokenizer, AutoModelForCausa
 import torch    
     
 TextPreprocessor = Callable[[str], str]
-    
+
+
+def to_cuda_or_cpu(x):
+    x.to('cuda' if torch.cuda.is_available() else 'cpu')
+
 
 class ModelWrapper:
     model: PreTrainedModel
@@ -32,13 +36,13 @@ class ModelWrapper:
                  quantization_config: QuantizationConfig = None,
                  preprocessors: List[TextPreprocessor] = []):
         # Check for quantization options
-        if (automodel_attributes.quantization_config is None 
-            and quantization_config is not None):
+        if (quantization_config is not None):
             logger.info('Detected quantization config')
-            automodel_attributes.quantization_config = BitsAndBytesConfig(**asdict(quantization_config))
+            #automodel_attributes.quantization_config = BitsAndBytesConfig(**asdict(quantization_config))
             
         # Load model
-        self.load_model(automodel_attributes)
+        self.load_model(automodel_attributes, quantization_config = BitsAndBytesConfig(**asdict(quantization_config)))
+        
         # Load tokenizer
         self.load_tokenizer(autotokenizer_attributes)
         
@@ -50,13 +54,16 @@ class ModelWrapper:
         self.tokenizer = self._load_tokenizer(attrs)
         
         
-    def load_model(self, attrs: AutoModelAttributes):
+    def load_model(self, attrs: AutoModelAttributes, **kwargs):
         logger.info(f'Loading model from {attrs.pretrained_model_name_or_path} ({type(self.AutoModelCLS).__name__})')
-        self.model = self._load_model(attrs)
+        self.model = self._load_model(attrs, **kwargs)
+        self.model.eval()
+        to_cuda_or_cpu(self.model)
         
         
-    def _load_model(self, attrs: AutoModelAttributes) -> PreTrainedModel:
-        model = self.AutoModelCLS.from_pretrained(**asdict(attrs))
+    def _load_model(self, attrs: AutoModelAttributes, **kwargs) -> PreTrainedModel:
+        print(asdict(attrs))
+        model = self.AutoModelCLS.from_pretrained(**asdict(attrs), **kwargs)
         return model
     
     
@@ -67,11 +74,13 @@ class ModelWrapper:
     
     def _generate(self, prompt: str, **kwargs):
         inputs = self.tokenizer(prompt, return_tensors='pt')
-        inputs.to('cuda' if torch.cuda.is_available() else 'cpu')
-        outputs = self.model.generate(**inputs, 
+        to_cuda_or_cpu(inputs)
+        with torch.no_grad():
+            outputs = self.model.generate(**inputs, 
                                       eos_token_id=self.model.config.eos_token_id,
                                       **kwargs)
         return outputs
+    
     
     def preprocess_prompt(self, prompt: str):
         if self.preprocessors:
