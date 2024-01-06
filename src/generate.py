@@ -5,6 +5,7 @@ from src.generator import PeftModelWrapper
 from src.huggingface_utils import AutoPeftModelAttributes, AutoTokenizerAttributes, QuantizationConfig, GenerationConfig
 from typing import Type, Tuple, List
 from loguru import logger
+from dotenv import find_dotenv, load_dotenv
 import sys
 import torch
 
@@ -27,6 +28,8 @@ def get_parser_config():
 
 
 def run_generation():
+    # Env
+    load_dotenv(find_dotenv())
     # Argument parsing
     args = parse_argv(get_parser_config(), sys.argv[1:])
     automodel_attrs: AutoPeftModelAttributes = getattr(args, AUTOMODEL_ATTRIBUTES_KEY)
