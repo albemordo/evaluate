@@ -1,9 +1,11 @@
 from src.generator import LLMInferenceGenerator
-from src.utils import DataTreeAttributes       
+from src.utils import DataTreeAttributes, dict_to_arglist 
 from src.dataloader import PromptDataLoader, DataLoaderAttributes
 from src.generator import PeftModelWrapper
 from src.huggingface_utils import AutoPeftModelAttributes, AutoTokenizerAttributes, QuantizationConfig, GenerationConfig
+from src.generate import run_generation
 import pytest
+import sys
 import torch
 
 
@@ -12,11 +14,11 @@ MODEL_REPO = "ybelkada/opt-350m-lora"
 TOKENIZER_REPO = 'facebook/opt-350m'
 
 
-@pytest.mark.model_generation
 @pytest.mark.inference_generation
+@pytest.mark.model_generation
 class TestInferenceGenerstor:
     def test_inf_gen(self):
-        dataloader_attrs = DataLoaderAttributes(DATA_DIR, model_folder='modelx')
+        dataloader_attrs = DataLoaderAttributes(DATA_DIR, model_folder='model_fanto')
         dataloader = PromptDataLoader(dataloader_attrs)
         quant_config = QuantizationConfig() if torch.cuda.is_available() else None
         generation_config = GenerationConfig(
@@ -40,3 +42,17 @@ class TestInferenceGenerstor:
         )
         
         generator.run()
+        
+        
+    def test_main_generate_command(self):
+        args = dict(
+            data_folder=DATA_DIR,
+            model_folder='model_fanto2',
+            pretrained_model_name_or_path=MODEL_REPO,
+            tokenizer_name_or_path=TOKENIZER_REPO,
+            num_return_sequences=2,
+            num_beams=10,
+            prompt_template_path='prompts/llama_2.txt',
+        )
+        sys.argv = dict_to_arglist(args)
+        run_generation()
