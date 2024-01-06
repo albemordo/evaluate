@@ -147,4 +147,9 @@ Thumbs.db
 !.env.vault
 
 # Generated files from tests folder
+# Ignore everything within the 'generated' folders
 tests/**/generated/*
+# But re-include the 'generated' directory so empty ones can be kept
+!tests/**/generated/
+# Exclude the .gitkeep files specifically so that they are tracked
+!tests/**/generated/.gitkeep
