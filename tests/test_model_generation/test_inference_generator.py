@@ -14,7 +14,7 @@ MODEL_REPO = "ybelkada/opt-350m-lora"
 TOKENIZER_REPO = 'facebook/opt-350m'
 
 
-@pytest.mark.inference_generation
+#@pytest.mark.inference_generation
 @pytest.mark.model_generation
 class TestInferenceGenerstor:
     def test_inf_gen(self):
@@ -44,6 +44,7 @@ class TestInferenceGenerstor:
         generator.run()
         
         
+    @pytest.mark.inference_generation
     def test_main_generate_command(self):
         args = dict(
             data_folder=DATA_DIR,
@@ -51,8 +52,9 @@ class TestInferenceGenerstor:
             pretrained_model_name_or_path=MODEL_REPO,
             tokenizer_name_or_path=TOKENIZER_REPO,
             num_return_sequences=2,
-            num_beams=10,
-            prompt_template_path='prompts/llama_2.txt',
+            do_sample=True,
+            temperature=0.2,
+            prompt_template_path='prompts/no_template.txt',
         )
         sys.argv = dict_to_arglist(args)
         run_generation()

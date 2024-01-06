@@ -145,3 +145,6 @@ Thumbs.db
 .flaskenv*
 !.env.project
 !.env.vault
+
+# Generated files from tests folder
+tests/**/generated/*
