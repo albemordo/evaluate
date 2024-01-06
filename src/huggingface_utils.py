@@ -23,6 +23,7 @@ class QuantizationConfig:
     bnb_4bit_compute_dtype = torch.float16
     
     
+# TODO: cambia nome dell'attributo 'pretrained_model_name_or_path'
 @dataclass
 class AutoTokenizerAttributes:
     pretrained_model_name_or_path: str

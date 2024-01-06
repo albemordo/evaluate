@@ -1,7 +1,9 @@
 from __future__ import annotations
 from dataclasses import dataclass, field
-from typing import List, Union, Any
+from typing import List, Union, Any, Type, Tuple
 from pathlib import Path
+from simple_parsing import ArgumentParser
+import sys
 
 
 DEFAULT_DATA_FOLDER = 'data'
@@ -65,3 +67,11 @@ def check_dict_equality(input_dict: dict[str, Any], target_dict: dict[str, Any],
             print(f"Key={key}, {input_dict[key]} != {target_dict[key]}")
             return False
     return True
+
+
+def parse_argv(config: List[Tuple[Type, str]], argv: List[str] = sys.argv):
+    parser = ArgumentParser()
+    [parser.add_arguments(t, s) for t, s in config]
+    print([w.dataclass for w in parser._wrappers])
+    args, _ = parser.parse_known_args(argv)
+    return args

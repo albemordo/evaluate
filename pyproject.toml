@@ -7,5 +7,8 @@ markers = [
     "autotokenizer",
     "terraform_cli_commands",
     "model_generation",
+    "inference_generation",
+    "model_wrapper",
+    "parse_from_cli",
     "debug"
 ]

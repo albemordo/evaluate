@@ -10,6 +10,7 @@ TOKENIZER_REPO = 'facebook/opt-350m'
 
 
 @pytest.mark.model_generation
+@pytest.mark.model_wrapper
 class TestModelWrapper:
     def test_model_generation(self):
         dataloader_attrs = DataLoaderAttributes(DATA_DIR, model_folder='modelx')

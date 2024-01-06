@@ -1,10 +1,8 @@
 from src.generator import LLMInferenceGenerator
-from src.dataloader import DataLoader, DataTreeAttributes
-from src.generator import ModelWrapper
 from src.utils import DataTreeAttributes       
 from src.dataloader import PromptDataLoader, DataLoaderAttributes
 from src.generator import PeftModelWrapper
-from src.huggingface_utils import AutoPeftModelAttributes, AutoTokenizerAttributes, QuantizationConfig 
+from src.huggingface_utils import AutoPeftModelAttributes, AutoTokenizerAttributes 
 import pytest
 
 
@@ -13,9 +11,10 @@ MODEL_REPO = "ybelkada/opt-350m-lora"
 TOKENIZER_REPO = 'facebook/opt-350m'
 
 
-@pytest.mark.debug
+@pytest.mark.model_generation
+@pytest.mark.inference_generation
 class TestInferenceGenerstor:
-    def test_inf_gen(self):
+    def test_inf_gen_no_quant(self):
         dataloader_attrs = DataLoaderAttributes(DATA_DIR, model_folder='modelx')
         dataloader = PromptDataLoader(dataloader_attrs)
         
