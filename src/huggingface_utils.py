@@ -52,7 +52,7 @@ class GenerationConfig:
     do_sample: bool = False
     num_beams: int = 1
     num_beam_groups: int = 1
-    use_cache: bool = True
+    use_cache: bool = False
     temperature: float = 1.0
     top_k: int = 50
     top_p: float = 1.0
