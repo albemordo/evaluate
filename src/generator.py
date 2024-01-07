@@ -72,7 +72,6 @@ class ModelWrapper:
         logger.info(f'Loading model from {attrs.pretrained_model_name_or_path} ({type(self.AutoModelCLS).__name__})')
         self.model = self._load_model(attrs, **kwargs)
         to_cuda_or_cpu(self.model)
-        logger.info(self.model)
         
         
     def _load_model(self, attrs: AutoModelAttributes, **kwargs) -> PreTrainedModel:
@@ -88,7 +87,6 @@ class ModelWrapper:
     def _generate(self, prompt: str, **kwargs):
         inputs = self.tokenizer(prompt, return_tensors='pt')
         to_cuda_or_cpu(inputs)
-        logger.info(inputs)
         with torch.no_grad():
             outputs = self.model.generate(**inputs, 
                                       eos_token_id=self.model.config.eos_token_id,
@@ -113,6 +111,7 @@ class ModelWrapper:
     def generate(self, prompt: str, **kwargs):
         logger.trace(f'Generating input for prompt\n{prompt}\n')
         prompt = self.preprocess_prompt(prompt) # Preprocess
+        logger.info(f"Generation config:\n{self.generation_config}\nKWArgs: {kwargs}")
         outputs = self._generate(prompt=prompt, **asdict(self.generation_config), **kwargs)
         text = self.postprocess_model_output(outputs)
         return text
