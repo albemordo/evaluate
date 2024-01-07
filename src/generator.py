@@ -157,19 +157,20 @@ class LLMInferenceGenerator:
         
         # Model inference
         # Generating N sequences in parallel may be hardware intense
-        # so we do it sequentially
+        # so we do it sequentially. This is a workaround
         num_sequences = self.model_wrapper.generation_config.num_return_sequences
-        if num_sequences > 1:   
-            self.model_wrapper.generation_config.num_return_sequences = 1
-            logger.info(f"Detected num_sequences > 1 ({num_sequences})")
+        if num_sequences > 1:   self.model_wrapper.generation_config.num_return_sequences = 1
             
         output_texts = [self.model_wrapper.generate(item.prompt) for _ in range(num_sequences)]
+        
+        # Resetting num_return_sequences
+        self.model_wrapper.generation_config.num_return_sequences = num_sequences
         
         # Output saving
         for i, text in enumerate(output_texts):
             file_name = str(self.data_tree_attributes.generated_files_prefix)+str(i)    # output_x
             output_file_path = absolute_model_output_path.joinpath(file_name).absolute()
-            logger.info(f'Saving file {output_file_path}')
+            logger.trace(f'Saving file {output_file_path}')
             output_file_path.touch()            # create file
             output_file_path.write_text(text)   # write to file
     
