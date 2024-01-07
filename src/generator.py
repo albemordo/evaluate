@@ -10,7 +10,7 @@ from src.huggingface_utils import (
 from loguru import logger
 from shutil import rmtree
 from os import path
-from tqdm import tqdm
+from tqdm.notebook import tqdm
 from functools import reduce
 from typing import Callable, List
 from peft import AutoPeftModelForCausalLM, PeftModel
@@ -88,9 +88,15 @@ class ModelWrapper:
         inputs = self.tokenizer(prompt, return_tensors='pt')
         to_cuda_or_cpu(inputs)
         with torch.no_grad():
-            outputs = self.model.generate(**inputs, 
+            # Generating N sequences in parallel may be hardware intense
+            # so we do it sequentially
+            num_sequences = self.generation_config.num_return_sequences
+            if num_sequences > 1:   self.generation_config.num_return_sequences = 1
+            outputs = [self.model.generate(**inputs, 
                                       eos_token_id=self.model.config.eos_token_id,
+                                      **asdict(self.generation_config),
                                       **kwargs)
+                       for _ in range(num_sequences)]
         return outputs
     
     
@@ -111,8 +117,8 @@ class ModelWrapper:
     def generate(self, prompt: str, **kwargs):
         logger.trace(f'Generating input for prompt\n{prompt}\n')
         prompt = self.preprocess_prompt(prompt) # Preprocess
-        logger.info(f"Generation config:\n{self.generation_config}\nKWArgs: {kwargs}")
-        outputs = self._generate(prompt=prompt, **asdict(self.generation_config), **kwargs)
+
+        outputs = self._generate(prompt=prompt, **kwargs)
         text = self.postprocess_model_output(outputs)
         return text
 
@@ -171,6 +177,13 @@ class LLMInferenceGenerator:
     
     
     def run(self):
-        for item in tqdm(self.dataloader):
-            logger.info(f'Processing test {item.test_name}')
-            self.process_item(item)
+        with tqdm(total=len(self.dataloader), leave=False, position=0) as pbar:
+            for item in self.dataloader:
+                pbar.set_description(item.test_name)
+                logger.trace(f'Processing test {item.test_name}')
+                # Inference
+                self.process_item(item)
+                
+                # Update bar
+                pbar.update()
+                pbar.refresh()
