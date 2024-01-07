@@ -105,7 +105,7 @@ class ModelWrapper:
     
     
     def postprocess_model_output(self, outputs):
-        generated_texts = self.tokenizer.batch_decode(outputs.detach().cpu().numpy(), skip_special_tokens=True)
+        generated_texts = self.tokenizer.batch_decode(outputs.detach().cpu().numpy(), skip_special_tokens=True)[0]
         return generated_texts
     
     
@@ -159,23 +159,23 @@ class LLMInferenceGenerator:
         # Generating N sequences in parallel may be hardware intense
         # so we do it sequentially
         num_sequences = self.model_wrapper.generation_config.num_return_sequences
-        if num_sequences > 1:   self.model_wrapper.generation_config.num_return_sequences = 1
+        if num_sequences > 1:   
+            self.model_wrapper.generation_config.num_return_sequences = 1
+            logger.info(f"Detected num_sequences > 1 ({num_sequences})")
+            
         output_texts = [self.model_wrapper.generate(item.prompt) for _ in range(num_sequences)]
         
         # Output saving
-        with tqdm(total=len(output_texts), position=0, leave=False) as pbar:
-            for i, text in enumerate(output_texts):
-                file_name = str(self.data_tree_attributes.generated_files_prefix)+str(i)    # output_x
-                output_file_path = absolute_model_output_path.joinpath(file_name).absolute()
-                logger.trace(f'Saving file {output_file_path}')
-                output_file_path.touch()            # create file
-                output_file_path.write_text(text)   # write to file
-                
-                pbar.update()
-                pbar.refresh()
+        for i, text in enumerate(output_texts):
+            file_name = str(self.data_tree_attributes.generated_files_prefix)+str(i)    # output_x
+            output_file_path = absolute_model_output_path.joinpath(file_name).absolute()
+            logger.info(f'Saving file {output_file_path}')
+            output_file_path.touch()            # create file
+            output_file_path.write_text(text)   # write to file
     
     
     def run(self):
+        logger.info('Start Inference')
         with tqdm(total=len(self.dataloader), leave=False, position=0) as pbar:
             for item in self.dataloader:
                 pbar.set_description(item.test_name)
