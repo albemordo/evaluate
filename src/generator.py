@@ -88,15 +88,10 @@ class ModelWrapper:
         inputs = self.tokenizer(prompt, return_tensors='pt')
         to_cuda_or_cpu(inputs)
         with torch.no_grad():
-            # Generating N sequences in parallel may be hardware intense
-            # so we do it sequentially
-            num_sequences = self.generation_config.num_return_sequences
-            if num_sequences > 1:   self.generation_config.num_return_sequences = 1
-            outputs = [self.model.generate(**inputs, 
+            outputs = self.model.generate(**inputs, 
                                       eos_token_id=self.model.config.eos_token_id,
                                       **asdict(self.generation_config),
                                       **kwargs)
-                       for _ in range(num_sequences)]
         return outputs
     
     
@@ -161,7 +156,11 @@ class LLMInferenceGenerator:
         absolute_model_output_path.mkdir(exist_ok=True, parents=True)
         
         # Model inference
-        output_texts = self.model_wrapper.generate(item.prompt)
+        # Generating N sequences in parallel may be hardware intense
+        # so we do it sequentially
+        num_sequences = self.model_wrapper.generation_config.num_return_sequences
+        if num_sequences > 1:   self.model_wrapper.generation_config.num_return_sequences = 1
+        output_texts = [self.model_wrapper.generate(item.prompt) for _ in range(num_sequences)]
         
         # Output saving
         with tqdm(total=len(output_texts), position=0, leave=False) as pbar:
