@@ -1,1 +1,1 @@
-Provide terraform hcl code to create an aws instance of size 't2.micro' with the ami set to 'ami-938813031', the vpc is 'sg-abcdefgh01234'.
+Provide terraform code containing a variable named 'variable_1', which the default value is "Hello World!", and an output block named 'output_1' should outputs its content.

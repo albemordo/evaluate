@@ -1,1 +1,4 @@
-Provide terraform hcl code to create an aws instance of size 't2.micro' with the ami set to 'ami-938813031', the vpc is 'sg-abcdefgh01234'.
+Provide terraform hcl code containing three variables:
+    - The first one is named 'variable_1' of type string and value set to 'variable_1_content'.
+    - The second one is named 'variable_2' of type bool. Its value must be set to true.
+    - The last one should be named 'variable_3' of type bool. Set its value to false.
