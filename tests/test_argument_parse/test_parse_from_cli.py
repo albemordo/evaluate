@@ -3,6 +3,7 @@ from src.utils import parse_argv, dict_to_arglist, DataTreeAttributes
 from typing import List, Type, Tuple
 import src.generate as generate
 import pytest
+import sys
 
 
 cli_attributes = dict(
@@ -37,3 +38,23 @@ class TestParseCliArgs:
         assert automodel_attrs.adapter_name == cli_attributes.get('adapter_name')
         assert quantization_attrs.load_in_4bit == cli_attributes.get('load_in_4bit')
         assert autotokenizer_attrs.pretrained_model_name_or_path == cli_attributes.get('tokenizer_name_or_path')
+        
+
+    def test_parse_lists(self):
+        argparse_config: List[Tuple[Type, str]] = []
+        argparse_config.append((DataTreeAttributes, generate.DATA_TREE_ATTRIBUTES_KEY))
+        sys.argv = [
+            'program',
+            '--data_folder',
+            'lol',
+            '--model_folder',
+            'asd',
+            '--providers_to_ignore',
+            'p1, p2'
+        ]
+        # Parsing
+        args = parse_argv(argparse_config, sys.argv)
+        dataloader_attrs: DataTreeAttributes = getattr(args, generate.DATA_TREE_ATTRIBUTES_KEY)
+        
+        assert 'p1' in dataloader_attrs.providers_to_ignore
+        assert 'p2' in dataloader_attrs.providers_to_ignore

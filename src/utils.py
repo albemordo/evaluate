@@ -1,8 +1,9 @@
 from __future__ import annotations
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import List, Union, Any, Type, Tuple
 from pathlib import Path
-from simple_parsing import ArgumentParser
+from simple_parsing import ArgumentParser, ConflictResolution
+from simple_parsing.helpers import field
 import sys
 
 
@@ -10,7 +11,7 @@ DEFAULT_DATA_FOLDER = 'data'
 DEFAULT_MODEL_FOLDER = ''
 DEFAULT_PROMPT_FILENAME = 'prompt.txt'
 DEFAULT_GENERATED_FILES_PREFIX = 'output_'
-DEFAULT_GENERATED_FILES_SUFFIX = '.tf'
+DEFAULT_GENERATED_FILES_SUFFIX = ''
 DEFAULT_LOCAL_GENERATED_FOLDER_NAME = 'generated'
 DEFAULT_TARGET_PLAN_FILENAME = 'plan.tfplan'
 DEFAULT_TARGET_TF_FILENAME = 'main.tf'
@@ -21,9 +22,15 @@ class DataTreeAttributes:
     data_folder: str = DEFAULT_DATA_FOLDER                          # Root directory for data
     model_folder: str = DEFAULT_MODEL_FOLDER                        # Folder from which retrieve generated outputs
     providers_to_ignore: List[str] = field(
-        default_factory = lambda: [])                               # List of providers to ignore
+        default_factory = list,
+        nargs='?',
+        type=lambda v: [item.strip() for item in v.split(",")]
+    )                               # List of providers to ignore
     tests_to_ignore: List[str] = field(
-        default_factory = lambda: [])                               # List of tests to ignore
+        default_factory = list,
+        nargs='?',
+        type=lambda v: [item.strip() for item in v.split(",")]
+    )                               # List of tests to ignore
     #########
     prompt_filename: str = DEFAULT_PROMPT_FILENAME                  # Filename for the prompt
     generated_files_prefix: str = DEFAULT_GENERATED_FILES_PREFIX    # Standard prefix for model-generated output files

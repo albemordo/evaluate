@@ -168,7 +168,8 @@ class LLMInferenceGenerator:
         
         # Output saving
         for i, text in enumerate(output_texts):
-            file_name = str(self.data_tree_attributes.generated_files_prefix)+str(i)+str(self.data_tree_attributes.generated_files_suffix)    # output_x.tf
+            # a default file name might be `output_x`
+            file_name = str(self.data_tree_attributes.generated_files_prefix)+str(i)+str(self.data_tree_attributes.generated_files_suffix)    # <prefix><i><suffix>
             output_file_path = absolute_model_output_path.joinpath(file_name).absolute()
             logger.trace(f'Saving file {output_file_path}')
             output_file_path.touch()            # create file
