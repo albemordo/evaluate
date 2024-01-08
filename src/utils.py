@@ -10,6 +10,7 @@ DEFAULT_DATA_FOLDER = 'data'
 DEFAULT_MODEL_FOLDER = ''
 DEFAULT_PROMPT_FILENAME = 'prompt.txt'
 DEFAULT_GENERATED_FILES_PREFIX = 'output_'
+DEFAULT_GENERATED_FILES_SUFFIX = '.tf'
 DEFAULT_LOCAL_GENERATED_FOLDER_NAME = 'generated'
 DEFAULT_TARGET_PLAN_FILENAME = 'plan.tfplan'
 DEFAULT_TARGET_TF_FILENAME = 'main.tf'
@@ -26,6 +27,7 @@ class DataTreeAttributes:
     #########
     prompt_filename: str = DEFAULT_PROMPT_FILENAME                  # Filename for the prompt
     generated_files_prefix: str = DEFAULT_GENERATED_FILES_PREFIX    # Standard prefix for model-generated output files
+    generated_files_suffix: str = DEFAULT_GENERATED_FILES_SUFFIX
     local_generated_folder_name: str = DEFAULT_LOCAL_GENERATED_FOLDER_NAME  # Folder containing models' outputs
     target_plan_filename: str = DEFAULT_TARGET_PLAN_FILENAME                # Target (ground_truth) plan name
     target_tf_filename: str = DEFAULT_TARGET_TF_FILENAME                    # Target tf file name
