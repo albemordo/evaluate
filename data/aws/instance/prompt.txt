@@ -1,1 +1,2 @@
-Provide terraform hcl code to create an aws instance of size 't2.micro' with the ami set to 'ami-938813031', the vpc is 'sg-abcdefgh01234'.
+Provide terraform hcl code to create an aws instance of size 't2.micro' with the ami set to 'ami-1234567890', the vpc is 'sg-abcde12345'. 
+Also set up the aws provider in the region "eu-west-3".

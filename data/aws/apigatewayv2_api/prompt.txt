@@ -1,0 +1,2 @@
+Provide terraform hcl code containing an aws_apigatewayv2_api resource. The block must be named "my_apigateway" and ready for the "HTTP" protocol, the 'name' attribute should be set to "example-http-api".
+Also set up the aws provider block in the region "eu-west-3".

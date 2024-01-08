@@ -1,0 +1,2 @@
+Provide terraform hcl code containing an aws iam role resource named "my_role". The attribute 'assume_role_policy' encodes a default policy (using jsonencode()) for the ec2 service.
+Also set up the aws provider in the region "eu-west-3".
