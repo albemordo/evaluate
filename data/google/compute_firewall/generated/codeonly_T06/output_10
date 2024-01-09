@@ -1,0 +1,31 @@
+[INST] Produce terraform code for just a single google compute firewall resource named "my_rules" for the project "my-project-name". The firewall must allow the tcp protocol for the ports 80, 8080, 1000-2000. The network is "default. [/INST] # [START vpc_firewall_basic]
+# This file has some scaffolding to make sure that names are unique and that
+# a region and zone are selected when you try to create your Terraform resources.
+
+locals {
+  name_suffix = "${random_pet.suffix.id}"
+}
+
+resource "random_pet" "suffix" {
+  length = 2
+}
+
+provider "google" {
+  region = "us-central1"
+  zone   = "us-central1-c"
+}
+
+resource "google_compute_firewall" "my_rules" {
+  name    = "my_rules-${local.name_suffix}"
+  project = "my-project-name"
+
+  source_ranges = ["0.0.0.0/0"]
+
+  allow {
+    protocol = "tcp"
+    ports    = ["80", "8080", "1000-2000"]
+  }
+
+  network = "default"
+}
+# [END vpc_firewall_basic]

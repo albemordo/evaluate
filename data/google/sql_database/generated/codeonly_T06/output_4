@@ -1,0 +1,25 @@
+[INST] Provide terraform code containing the following resources:
+- A google_sql_database_instance named "instance" in the region "us-central1", having database version of "MYSQL_8_0" and deletion_protection set to "true".
+- A google_sql_database named "database" having the attribute "instance" linked to the google_sql_database_instance.instance id.
+ [/INST]
+
+# [START cloudposse_google_sql_instance]
+
+# Create a database instance
+resource "google_sql_database_instance" "instance" {
+  name             = "instance"
+  region           = "us-central1"
+  database_version = "MYSQL_8_0"
+  deletion_protection = "true"
+}
+
+# [END cloudposse_google_sql_instance]
+
+# [START cloudposse_google_sql_database]
+
+# Create a database
+resource "google_sql_database" "database" {
+  instance = google_sql_database_instance.instance.id
+}
+
+# [END cloudposse_google_sql_database]

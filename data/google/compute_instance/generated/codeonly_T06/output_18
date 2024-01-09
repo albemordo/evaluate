@@ -1,0 +1,20 @@
+[INST] Provide terraform hcl code with just a google compute instance resource named "my_instance". The machine type is "n2-standard-2" and the zone is "us-central1-a".
+The boot_disk image must be set to "debian-cloud/debian-11". Also set up a network interface inside the resource, the network is "default". [/INST]
+# [START vpc_instance_basic]
+resource "google_compute_instance" "my_instance" {
+  name         = "my-instance"
+  machine_type = "n2-standard-2"
+  zone         = "us-central1-a"
+
+  # Local SSD disk
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-11"
+    }
+  }
+
+  network_interface {
+    network = "default"
+  }
+}
+# [END vpc_instance_basic]

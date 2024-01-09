@@ -1,0 +1,32 @@
+[INST] Retrieve terraform code containing a google_cloudfunctions2_function resource named "myfunction" and located in the "us-central1". For the build config, the runtime will be nodejs16 while the entry point "helloHttp". For the service config, the maximum instance count is 1, the available memory will be 256 Megabytes and the timeout is 60 seconds. [/INST]
+# This file has some scaffolding to make sure that names are unique and that
+# a region and zone are selected when you try to create your Terraform resources.
+
+locals {
+  name_suffix = "${random_pet.suffix.id}"
+}
+
+resource "random_pet" "suffix" {
+  length = 2
+}
+
+provider "google" {
+  region = "us-central1"
+  zone   = "us-central1-c"
+}
+
+resource "google_cloudfunctions2_function" "myfunction" {
+  name = "myfunction-${local.name_suffix}"
+  location = "us-central1"
+  runtime = "nodejs16"
+  entry_point = "helloHttp"
+  build_config {
+    runtime = "nodejs16"
+    entry_point = "helloHttp"
+  }
+  service_config {
+    max_instance_count = 1
+    available_memory_mb = 256
+    timeout_seconds     = 60
+  }
+}
