@@ -3,7 +3,6 @@ resource "google_storage_bucket" "my_bucket" {
   location      = "EU"
   force_destroy = true
 
-  uniform_bucket_level_access = true
 
   website {
     main_page_suffix = "index.html"

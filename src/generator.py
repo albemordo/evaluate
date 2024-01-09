@@ -173,7 +173,7 @@ class LLMInferenceGenerator:
             output_file_path = absolute_model_output_path.joinpath(file_name).absolute()
             logger.trace(f'Saving file {output_file_path}')
             output_file_path.touch()            # create file
-            output_file_path.write_text(text)   # write to file
+            output_file_path.write_text(text, encoding='utf-8')   # write to file
     
     
     def run(self):

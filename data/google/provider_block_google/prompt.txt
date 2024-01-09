@@ -1,0 +1,1 @@
+Provide terraform hcl code containing just the google provider block for the project "my_project" and in the region "us-central1".

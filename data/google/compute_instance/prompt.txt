@@ -1,1 +1,2 @@
-Provide terraform hcl code to create an aws instance of size 't2.micro' with the ami set to 'ami-938813031', the vpc is 'sg-abcdefgh01234'.
+Provide terraform hcl code with just a google compute instance resource named "my_instance". The machine type is "n2-standard-2" and the zone is "us-central1-a".
+The boot_disk image must be set to "debian-cloud/debian-11". Also set up a network interface inside the resource, the network is "default".
