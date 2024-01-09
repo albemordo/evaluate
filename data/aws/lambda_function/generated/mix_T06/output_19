@@ -1,0 +1,26 @@
+[INST] Provide terraform hcl code to set up an aws lambda function. The block name is "my_lambda", the code (filename attribute) is located at "lambda_function_payload.zip", the function_name should be set to "lambda_function_name". The policy (role) must be "arn:aws:lambda:eu-west-3:123456789012:function:lambda_function_name", while the runtime is nodejs18.x and the handler is "index.test".
+Also provide the aws provider in the region "eu-west-3". [/INST] ```hcl
+// This terraform configuration describes a simple example of how to create a Lambda function in AWS using Terraform. The function is written in Node.js and uses the AWS Lambda console to deploy the function.
+
+resource "aws_lambda_function" "my_lambda" {
+  // The name of the Lambda function
+  function_name = "lambda_function_name"
+
+  // The path to the zip file containing the Lambda function
+  filename = "lambda_function_payload.zip"
+
+  // The AWS Lambda function policy, which defines the permissions and roles for the Lambda function
+  role = "arn:aws:lambda:eu-west-3:123456789012:function:lambda_function_name"
+
+  // The runtime environment for the Lambda function, which determines the programming language and libraries used
+  runtime = "nodejs18.x"
+
+  // The handler for the Lambda function, which is the function to execute when the Lambda function is triggered
+  handler = "index.test"
+}
+
+// The provider block defines the AWS provider and its configuration
+provider "aws" {
+  region = "eu-west-3"
+}
+```

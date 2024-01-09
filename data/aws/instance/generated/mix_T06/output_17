@@ -1,0 +1,18 @@
+[INST] Provide terraform hcl code to create an aws instance of size 't2.micro' with the ami set to 'ami-1234567890', the vpc is 'sg-abcde12345'. 
+Also set up the aws provider in the region "eu-west-3". [/INST] ```hcl
+# This terraform script creates a new EC2 instance in AWS.
+
+resource "aws_instance" "example" {
+  # The type of instance to create. In this case, a t2.micro instance.
+  instance_type = "t2.micro"
+
+  # The AMI to use for this instance. In this case, an AMI with ID "ami-1234567890".
+  ami = "ami-1234567890"
+
+  # The security group to allow traffic through. In this case, the security group "sg-abcde12345".
+  vpc_security_group_ids = ["sg-abcde12345"]
+
+  # The provider that will be used to create the AWS resources. In this case, "eu-west-3".
+  provider = "aws"
+}
+```

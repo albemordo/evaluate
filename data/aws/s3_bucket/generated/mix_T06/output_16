@@ -1,0 +1,44 @@
+[INST] Provide terraform code containing an aws s3 bucket named "my_bucket", the 'bucket' attribute must be set to "my_bucket_name". [/INST] ```hcl
+
+# AWS S3 Bucket
+resource "aws_s3_bucket" "bucket" {
+  # The bucket name to be used
+  bucket = "my_bucket_name"
+
+  # The ACL to apply
+  acl    = "private"
+
+  # The ARN of the bucket
+  arn    = "arn:aws:s3:::my_bucket_name"
+
+  # The location of the bucket
+  location = "US"
+
+  # The logging configuration
+  logging {
+    target_bucket = "my_bucket_name"
+    target_prefix = "log/"
+  }
+
+  # The tags to be applied to the bucket
+  tags = {
+    Environment = "Dev"
+    Name        = "My bucket"
+  }
+
+  # The Uniform Resource Locator (URL) of the bucket
+  website {
+    index_document = "index.html"
+    error_document = "error.html"
+  }
+
+  # The server-side encryption configuration
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
+    }
+  }
+}
+```

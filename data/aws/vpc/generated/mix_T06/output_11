@@ -1,0 +1,73 @@
+[INST] Provide terraform code with an aws provider in the region "eu-west-3".
+Also set up an aws vpc named "my_vpc" in with cidr_block set to "10.0.0.0/16". [/INST] ```hcl
+# This terraform configuration creates a new VPC in AWS with a private subnet
+
+provider "aws" {
+  region = "eu-west-3"
+}
+
+resource "aws_vpc" "my_vpc" {
+  cidr_block = "10.0.0.0/16"
+}
+
+resource "aws_subnet" "private" {
+  vpc_id = "${aws_vpc.my_vpc.id}"
+  cidr_block = "10.0.0.0/24"
+}
+
+resource "aws_route_table" "private" {
+  vpc_id = "${aws_vpc.my_vpc.id}"
+  route {
+    cidr_block = "0.0.0.0/0"
+    nat_gateway_id = "${aws_nat_gateway.nat.id}"
+  }
+}
+
+resource "aws_route_table_association" "private" {
+  subnet_id = "${aws_subnet.private.id}"
+  route_table_id = "${aws_route_table.private.id}"
+}
+
+resource "aws_nat_gateway" "nat" {
+  subnet_id = "${aws_subnet.private.id}"
+}
+
+resource "aws_eip" "nat" {
+  vpc = true
+}
+
+resource "aws_eip_association" "nat" {
+  instance = "${aws_instance.instance.id}"
+  eip = "${aws_eip.nat.id}"
+}
+
+resource "aws_instance" "instance" {
+  ami = "ami-a7017796"
+  instance_type = "t2.micro"
+  vpc_security_group_ids = ["${aws_security_group.allow_all_traffic.id}"]
+  subnet_id = "${aws_subnet.private.id}"
+  associate_public_ip_address = true
+}
+
+resource "aws_security_group" "allow_all_traffic" {
+  name = "allow_all_traffic"
+  description = "Allow all traffic"
+  vpc_id = "${aws_vpc.my_vpc.id}"
+
+  # Allow all incoming traffic
+  ingress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Allow all outgoing traffic
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+```

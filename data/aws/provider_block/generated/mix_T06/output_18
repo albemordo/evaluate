@@ -1,0 +1,10 @@
+[INST] Provide terraform code containing just the aws provider in the region "eu-west-3". [/INST] ```hcl
+ everyone is welcome to see and edit my code, so i would recommend adding a provider definition at the top of your terraform code.
+
+```hcl
+provider "aws" {
+  region = "eu-west-3"
+}
+```
+
+This block of code is a terraform provider definition for the aws provider. It sets the region to eu-west-3. This is necessary for any code that uses the aws provider in that region.

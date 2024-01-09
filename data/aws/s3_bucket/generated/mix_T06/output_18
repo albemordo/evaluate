@@ -1,0 +1,9 @@
+[INST] Provide terraform code containing an aws s3 bucket named "my_bucket", the 'bucket' attribute must be set to "my_bucket_name". [/INST] ```hcl
+
+```terraform
+resource "aws_s3_bucket" "my_bucket" {
+  bucket = "my_bucket_name"
+}
+```
+
+The above terraform code creates an S3 bucket named 'my_bucket' with a bucket name of 'my_bucket_name'. The 'bucket' attribute must be set to the desired bucket name.

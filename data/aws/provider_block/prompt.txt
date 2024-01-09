@@ -1,1 +1,1 @@
-Provide terraform hcl code containing an aws provider block in the region "eu-west-3".
+Provide terraform code containing just the aws provider in the region "eu-west-3".

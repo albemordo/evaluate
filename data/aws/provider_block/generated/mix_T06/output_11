@@ -1,0 +1,6 @@
+[INST] Provide terraform code containing just the aws provider in the region "eu-west-3". [/INST] ```hcl
+ nobody:
+ provider "aws" {
+  region = "eu-west-3"
+}
+```

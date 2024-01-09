@@ -1,0 +1,40 @@
+[INST] Provide terraform hcl code to set up an aws lambda function with an aws iam role for the lambda.
+The iam role block must be named "iam_for_lambda" and should contain, in the assume_role_policy attribute, a policy (with jsonencode()) for the ec2.amazonaws.com service.
+The lambda function block must be named "my_lambda", the 'filename' (the zipped code) must be "lambda_function_payload.zip", the function_name should be "lambda_function_name", the 'role' attribute must be linked to the arn of the iam_for_lambda. The handler will be 'index.test', while the runtime is set to 'nodejs18.x'.
+Also, set up the aws provider in the region "eu-west-3". [/INST] ```hcl
+variable "filename" {
+  default = "lambda_function_payload.zip"
+}
+variable "function_name" {
+  default = "lambda_function_name"
+}
+variable "role" {
+  default = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.filename}"
+}
+variable "handler" {
+  default = "index.test"
+}
+variable "runtime" {
+  default = "nodejs18.x"
+}
+
+provider "aws" {
+  region = "eu-west-3"
+}
+
+resource "aws_lambda_function" "my_lambda" {
+  filename         = var.filename
+  function_name    = var.function_name
+  role             = var.role
+  handler          = var.handler
+  runtime          = var.runtime
+  source_code_hash = base64sha256(file("lambda_function_payload.zip"))
+  environment {
+    variables = {
+      FOO = "bar"
+    }
+  }
+}
+
+data "aws_caller_identity" "current" {}
+```

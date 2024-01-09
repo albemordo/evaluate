@@ -1,0 +1,17 @@
+[INST] Provide terraform hcl code to create an aws instance of size 't2.micro' with the ami set to 'ami-1234567890', the vpc is 'sg-abcde12345'. 
+Also set up the aws provider in the region "eu-west-3". [/INST] ```hcl
+resource "aws_instance" "example" {
+  ami           = "ami-1234567890"
+  instance_type = "t2.micro"
+  vpc_security_group_ids = ["sg-abcde12345"]
+
+  provisioner "file" {
+    content     = "echo Hello World from Terraform"
+    destination = "hello_world.txt"
+  }
+}
+
+provider "aws" {
+  region = "eu-west-3"
+}
+```

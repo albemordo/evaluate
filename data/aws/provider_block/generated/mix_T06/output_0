@@ -1,0 +1,11 @@
+[INST] Provide terraform code containing just the aws provider in the region "eu-west-3". [/INST] ```hcl
+ nobody_home:
+  provisioner "local-exec" {
+    command = "echo 'test' > /home/nobody"
+  }
+
+  provisioner "file" {
+    content = "test"
+    destination = "/home/nobody"
+  }
+```

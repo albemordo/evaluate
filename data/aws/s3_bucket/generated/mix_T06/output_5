@@ -1,0 +1,71 @@
+[INST] Provide terraform code containing an aws s3 bucket named "my_bucket", the 'bucket' attribute must be set to "my_bucket_name". [/INST] ```hcl
+# Terraform AWS S3 bucket
+
+resource "aws_s3_bucket" "my_bucket" {
+  # The name of the bucket
+  bucket = "my_bucket_name"
+
+  # The ACL to apply to the bucket
+  acl    = "private"
+
+  # The region where the bucket will reside
+  region = "us-west-2"
+
+  # The access block to configure public access to the bucket
+  access_block = "BlockPublicAccess"
+
+  # Enable versioning on the bucket
+  versioning {
+    enabled = true
+  }
+
+  # Enable public policy on the bucket
+  public_policy = "arn:aws:s3:::my_bucket-public:policy/public-read"
+
+  # Enable server-side encryption by default
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
+    }
+  }
+
+  # Enable logging on the bucket
+  logging {
+    target_bucket = "my-log-bucket"
+    target_prefix = "log/"
+  }
+
+  # Enable public access block on the bucket
+  public_access_block_configuration {
+    block_public_acls = true
+    block_public_policy = true
+    ignore_public_acls = true
+    restrict_public_buckets = true
+  }
+
+  # Enable server-side encryption by default
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
+    }
+  }
+
+  # Enable logging on the bucket
+  logging {
+    target_bucket = "my-log-bucket"
+    target_prefix = "log/"
+  }
+
+  # Enable public access block on the bucket
+  public_access_block_configuration {
+    block_public_acls = true
+    block_public_policy = true
+    ignore_public_acls = true
+    restrict_public_buckets = true
+  }
+}
+```

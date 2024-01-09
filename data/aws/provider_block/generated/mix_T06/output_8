@@ -1,0 +1,10 @@
+[INST] Provide terraform code containing just the aws provider in the region "eu-west-3". [/INST] ```hcl
+ surely you have to provide your AWS access credentials in order to use the `aws` provider.
+
+```hcl
+provider "aws" {
+  region = "eu-west-3"
+}
+```
+
+this is just a minimal example to get you started with terraform and the aws provider.

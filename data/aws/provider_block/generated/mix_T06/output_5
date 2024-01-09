@@ -1,0 +1,59 @@
+[INST] Provide terraform code containing just the aws provider in the region "eu-west-3". [/INST] ```hcl
+ nobody_home_ami
+# This terraform script creates a new AMI from a user's home directory on an existing EC2 instance.
+
+resource "aws_ami" "nobody_home_ami" {
+  name = "nobody-home-ami-${local.name_suffix}"
+  root_device_name = "/dev/xvda"
+  ena_enabled = true
+
+  source_ami = "${var.source_ami_id}"
+  source_id = "${var.source_ami_id}"
+  target_id = "${var.target_ami_id}"
+
+  tags {
+    Name = "nobody-home-ami-${local.name_suffix}"
+  }
+}
+
+resource "aws_instance" "nobody_home" {
+  ami           = "${aws_ami.nobody_home_ami.id}"
+  instance_type = "t2.micro"
+
+  tags {
+    Name = "nobody-home-instance-${local.name_suffix}"
+  }
+}
+
+variable "source_ami_id" {
+  description = "The ID of the source AMI to use"
+}
+
+variable "target_ami_id" {
+  description = "The ID of the target AMI to use"
+}
+
+variable "source_ami_name" {
+  description = "The name of the source AMI to use"
+}
+
+variable "target_ami_name" {
+  description = "The name of the target AMI to use"
+}
+
+# This file has some scaffolding to make sure that names are unique and that
+# a region and zone are selected when you try to create your Terraform resources.
+
+locals {
+  name_suffix = "${random_pet.suffix.id}"
+}
+
+resource "random_pet" "suffix" {
+  length = 2
+}
+
+provider "aws" {
+  region = "eu-west-3"
+  zone   = "eu-west-3a"
+}
+```

@@ -1,0 +1,7 @@
+[INST] Provide terraform code containing an aws s3 bucket named "my_bucket", the 'bucket' attribute must be set to "my_bucket_name". [/INST] ```hcl
+ nobody likes a passive aggressive bucket name
+
+resource "aws_s3_bucket" "my_bucket" {
+  bucket = "my_bucket_name"
+}
+```

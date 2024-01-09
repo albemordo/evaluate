@@ -1,0 +1,22 @@
+[INST] Provide terraform code containing an aws s3 bucket named "my_bucket", the 'bucket' attribute must be set to "my_bucket_name". [/INST] ```hcl
+ everybody,
+
+ I'm trying to create an AWS S3 bucket with Terraform, but I keep getting an error saying:
+
+```
+Error creating S3 bucket: InvalidParameterValue: The requested bucket name "my_bucket" is not valid. The bucket name must be no longer than 2048 characters and must not be in the format [A-Za-z0-9-_].
+```
+
+I have tried changing the bucket attribute to "my_bucket_name", but I keep getting the same error. Does anyone know what I'm doing wrong?
+
+Thank you in advance for your help!
+```
+Here is the terraform code:
+
+```hcl
+resource "aws_s3_bucket" "bucket" {
+  bucket = "my_bucket"
+}
+```
+The bucket name must be no longer than 2048 characters and must not be in the format [A-Za-z0-9-_].
+```

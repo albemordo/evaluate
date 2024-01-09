@@ -1,0 +1,10 @@
+[INST] Provide terraform code containing just the aws provider in the region "eu-west-3". [/INST] ```hcl
+ nobody can see your terraform code, so please provide it.
+
+```hcl
+provider "aws" {
+  region = "eu-west-3"
+}
+```
+
+This is a minimal terraform configuration for AWS. It creates a new resource group and a new AWS provider. The provider is configured with the default region of "eu-west-3".

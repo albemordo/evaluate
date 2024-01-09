@@ -1,0 +1,40 @@
+[INST] Provide terraform code containing an aws s3 bucket named "my_bucket", the 'bucket' attribute must be set to "my_bucket_name". [/INST] ```hcl
+
+# This terraform code creates an S3 bucket named "my_bucket"
+
+resource "aws_s3_bucket" "my_bucket" {
+  # The name of the bucket. In this case, it's "my_bucket"
+  bucket = "my_bucket_name"
+  
+  # The ACL to apply to the bucket. In this case, it's "private".
+  acl = "private"
+
+  # The location of the bucket. In this case, it's "US East (N. Virginia)".
+  location = "US East (N. Virginia)"
+
+  # The logging configuration for the bucket. In this case, it's "None".
+  logging {
+    target_bucket = "my_bucket"
+    target_prefix = "log/"
+  }
+
+  # The notification configuration for the bucket. In this case, it's "None".
+  notification_configuration {
+    events = []
+  }
+
+  # The public access block configuration for the bucket. In this case, it's "BlockPublicAccess".
+  public_access_block = "BlockPublicAccess"
+
+  # The tags to apply to the bucket. In this case, it's an empty list.
+  tags = []
+
+  # The Unmarshallers to apply to the bucket. In this case, it's "None".
+  unmarshallers = []
+
+  # The versioning configuration for the bucket. In this case, it's "Enabled".
+  versioning {
+    enabled = true
+  }
+}
+```

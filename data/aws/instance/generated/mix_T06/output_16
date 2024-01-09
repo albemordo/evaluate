@@ -1,0 +1,35 @@
+[INST] Provide terraform hcl code to create an aws instance of size 't2.micro' with the ami set to 'ami-1234567890', the vpc is 'sg-abcde12345'. 
+Also set up the aws provider in the region "eu-west-3". [/INST] ```hcl
+# input variables
+variable "ami" { default = "ami-1234567890" }
+variable "vpc_id" { default = "sg-abcde12345" }
+
+# output variables
+variable "instance_type" { default = "t2.micro" }
+variable "key" { default = "AWS" }
+variable "region" { default = "eu-west-3" }
+variable "tags" { default = {} }
+
+# aws provider
+provider "aws" {
+  region = "${var.region}"
+}
+
+# create a new instance
+resource "aws_instance" "instance" {
+  # the name of the instance
+  name = "${var.key}-${var.instance_type}"
+
+  # the AMI to use
+  ami = "${var.ami}"
+
+  # the vpc to launch in
+  vpc_security_group_ids = ["${var.vpc_id}"]
+
+  # the instance type to use
+  instance_type = "${var.instance_type}"
+
+  # the tags to assign to the instance
+  tags = "${merge(var.tags, map("Name", "${var.key}-${var.instance_type}"))}"
+}
+```

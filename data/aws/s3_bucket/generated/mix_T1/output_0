@@ -1,0 +1,20 @@
+[INST] Provide terraform code containing an aws s3 bucket named "my_bucket", the 'bucket' attribute must be set to "my_bucket_name". [/INST] ```hcl
+
+# This terraform file gives you an example of how to create a Terraform
+# resource. A resource is used to define the infrastructure that you
+# want to create. You can define resources as either a Terraform
+# resource or as a local, ad-hoc resource, depending on your needs.
+
+# In this example, we're creating a resource of type aws_s3_bucket. This
+# resource is used to create an S3 bucket in AWS. The "name" argument is
+# used to specify the name of the bucket, and the "bucket" argument is
+# used to specify the name of the bucket in a more specific manner. The
+# "bucket" argument must be set to "my_bucket_name". In the example,
+# "my_bucket_name" is "my-bucket".
+
+resource "aws_s3_bucket" "my_bucket" {
+  # name = "my_bucket"
+  # bucket = "my-bucket"   # this is wrong
+  bucket = "my_bucket_name"
+}
+```

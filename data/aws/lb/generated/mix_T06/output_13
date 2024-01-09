@@ -1,0 +1,49 @@
+[INST] Provide terraform hcl code containing an aws provider and an aws lb (Load Balancer).
+    - The region of the provider should be "eu-west-3".
+    - The load balancer type is "application", the 'subnets' attribute contains just a single element set to "subnet-1234567890". [/INST] ```hcl
+provider "aws" {
+  region = "eu-west-3"
+}
+
+resource "aws_lb" "x" {
+  name               = "my-lb-${local.name_suffix}"
+  load_balancer_type = "application"
+  subnets            = ["subnet-1234567890"]
+}
+
+# This file has some scaffolding to make sure that names are unique and that
+# a region and zone are selected when you try to create your Terraform resources.
+
+locals {
+  name_suffix = "${random_pet.suffix.id}"
+}
+
+resource "random_pet" "suffix" {
+  length = 2
+}
+
+provider "aws" {
+  region = "eu-central-1"
+  default = true
+}
+
+provider "aws" {
+  region = "eu-west-1"
+  default = false
+}
+
+provider "aws" {
+  region = "eu-west-2"
+  default = false
+}
+
+provider "aws" {
+  region = "eu-east-1"
+  default = false
+}
+
+provider "aws" {
+  region = "eu-north-1"
+  default = false
+}
+```

@@ -1,0 +1,18 @@
+[INST] Provide terraform hcl code containing an aws provider block in the region "eu-west-3". [/INST] ```hcl
+ nobody_delivery_channel_profile {
+    delivery_channel_profile_id = "my-delivery-channel-profile"
+    name                       = "my-delivery-channel-profile"
+    parent_profile_id          = "my-parent-profile"
+    parent_profile_name        = "My Parent Profile"
+    phone_call                 = "phone_call"
+    sms                        = "sms"
+    default                    = true
+    email                      = "email"
+    website                    = "website"
+}
+
+provider "aws" {
+  region = "eu-west-3"
+}
+```
+This terraform code creates an AWS delivery channel profile resource with default values set. The profile includes phone call, SMS, email and website as delivery channels. The profile is created under a parent profile which is also used as a name for the profile. The region and the provider are set as default values.

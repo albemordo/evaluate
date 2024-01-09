@@ -1,0 +1,9 @@
+[INST] Provide terraform hcl code containing an aws provider block in the region "eu-west-3". [/INST] ```hcl
+ hopefully, this will get you started:
+
+```hcl
+provider "aws" {
+  region = "eu-west-3"
+}
+```
+This block of code creates an AWS provider with the necessary credentials. It then sets the region where the instance is located. You can change this as necessary.

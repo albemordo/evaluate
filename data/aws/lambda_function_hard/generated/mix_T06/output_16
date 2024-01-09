@@ -1,0 +1,79 @@
+[INST] Provide terraform hcl code to set up an aws lambda function with an aws iam role for the lambda.
+The iam role block must be named "iam_for_lambda" and should contain, in the assume_role_policy attribute, a policy (with jsonencode()) for the ec2.amazonaws.com service.
+The lambda function block must be named "my_lambda", the 'filename' (the zipped code) must be "lambda_function_payload.zip", the function_name should be "lambda_function_name", the 'role' attribute must be linked to the arn of the iam_for_lambda. The handler will be 'index.test', while the runtime is set to 'nodejs18.x'.
+Also, set up the aws provider in the region "eu-west-3". [/INST] ```hcl
+variable "zip_file" {}
+variable "zip_file_url" {}
+variable "zip_file_name" {}
+variable "zip_file_sha256" {}
+variable "zip_file_size" {}
+
+variable "zip_file_region" {
+  default = "eu-west-3"
+}
+
+variable "zip_file_acl" {
+  default = "private"
+}
+
+variable "zip_file_content_type" {
+  default = "application/octet-stream"
+}
+
+variable "zip_file_expiration" {
+  default = "86400"
+}
+
+variable "zip_file_description" {
+  default = "My Lambda Function"
+}
+
+variable "zip_file_tags" {
+  default = {}
+}
+
+variable "zip_file_url_expiration" {
+  default = "86400"
+}
+
+variable "zip_file_url_description" {
+  default = "My Lambda Function"
+}
+
+variable "zip_file_url_tags" {
+  default = {}
+}
+
+resource "aws_iam_role" "iam_for_lambda" {
+  name               = "iam_for_lambda"
+  assume_role_policy = jsonencode({
+    "Version" : "2.0",
+    "Statement" : [
+      {
+        "Effect" : "Allow",
+        "Principal" : {
+          "Service" : "ec2.amazonaws.com"
+        },
+        "Action" : "sts:AssumeRole"
+      }
+    ]
+  })
+}
+
+resource "aws_lambda_function" "my_lambda" {
+  filename      = "lambda_function_payload.zip"
+  function_name = "lambda_function_name"
+  role          = aws_iam_role.iam_for_lambda.arn
+  handler       = "index.test"
+  runtime       = "nodejs18.x"
+  source_code_hash = "${base64sha256(file("${var.zip_file_url}"))}"
+  function_entropy = "${var.zip_file_sha256}"
+  function_size   = "${var.zip_file_size}"
+  description   = "${var.zip_file_description}"
+  tags          = "${merge(var.zip_file_tags, map("Name", format("%s-%s", var.zip_file_region, var.zip_file_name)), var.zip_file_url_tags)}"
+}
+
+provider "aws" {
+  region = var.zip_file_region
+}
+```

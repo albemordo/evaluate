@@ -1,0 +1,43 @@
+[INST] Provide terraform hcl code to create an aws instance of size 't2.micro' with the ami set to 'ami-1234567890', the vpc is 'sg-abcde12345'. 
+Also set up the aws provider in the region "eu-west-3". [/INST] ```hcl
+# input variables
+variable "aws_key" {}
+variable "aws_key_pair" {}
+variable "aws_region" {}
+variable "aws_vpc_id" {}
+variable "aws_subnet_id" {}
+variable "aws_ami_id" {}
+variable "aws_instance_type" {}
+variable "aws_name" {}
+variable "aws_user" {}
+variable "aws_password" {}
+variable "aws_root_volume_size" {}
+variable "aws_root_volume_type" {}
+variable "aws_root_volume_name" {}
+variable "aws_root_volume_image" {}
+variable "aws_instance_tags" {}
+
+# terraform
+provider "aws" {
+  region = "${var.aws_region}"
+}
+
+resource "aws_instance" "example" {
+  ami           = "${var.aws_ami_id}"
+  instance_type = "${var.aws_instance_type}"
+  key_name      = "${var.aws_key_pair}"
+  vpc_security_group_ids = ["${var.aws_vpc_id}"]
+  subnet_id = "${var.aws_subnet_id}"
+  tags = "${var.aws_instance_tags}"
+
+  root_block_device {
+    volume_size = "${var.aws_root_volume_size}"
+    volume_type = "${var.aws_root_volume_type}"
+    volume_name = "${var.aws_root_volume_name}"
+    image = "${var.aws_root_volume_image}"
+  }
+
+  user = "${var.aws_user}"
+  password = "${var.aws_password}"
+}
+```

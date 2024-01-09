@@ -1,0 +1,10 @@
+[INST] Provide terraform code with an aws provider in the region "eu-west-3".
+Also set up an aws vpc named "my_vpc" in with cidr_block set to "10.0.0.0/16". [/INST] ```hcl
+provider "aws" {
+  region = "eu-west-3"
+}
+
+resource "aws_vpc" "my_vpc" {
+  cidr_block = "10.0.0.0/16"
+}
+```

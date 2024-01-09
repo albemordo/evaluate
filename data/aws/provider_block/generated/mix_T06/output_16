@@ -1,0 +1,9 @@
+[INST] Provide terraform code containing just the aws provider in the region "eu-west-3". [/INST] ```hcl
+ hopefully this is what you are looking for:
+
+```terraform
+provider "aws" {
+  region = "eu-west-3"
+}
+```
+This will create a new AWS provider with the specified region. You can then use this provider to create resources in your Terraform code.

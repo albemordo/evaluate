@@ -1,0 +1,3 @@
+[INST] Provide terraform code containing just the aws provider in the region "eu-west-3". [/INST] ```hcl
+ nobody knows about the aws provider, but the terraform will be run in the correct region.
+```

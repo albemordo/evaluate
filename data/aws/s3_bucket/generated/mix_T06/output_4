@@ -1,0 +1,55 @@
+[INST] Provide terraform code containing an aws s3 bucket named "my_bucket", the 'bucket' attribute must be set to "my_bucket_name". [/INST] ```hcl
+
+# This terraform code is a sample terraform code to create an S3 bucket.
+
+resource "aws_s3_bucket" "bucket" {
+  # This is the name of the bucket.
+  bucket = "my_bucket_name"
+
+  # This is the ACL to apply to the bucket.
+  acl    = "private"
+
+  # This is the location of the bucket.
+  location = "US"
+
+  # This is the logging configuration for the bucket.
+  logging {
+    target_bucket = "my-log-bucket"
+    target_prefix = "log/"
+  }
+
+  # This is the public access block to control public access to the bucket.
+  public_access_block_configuration {
+    block_public_acls = true
+    block_public_policy = true
+    ignore_public_acls = true
+    restrict_public_buckets = true
+  }
+
+  # This is the tags to be applied to the bucket.
+  tags = {
+    environment = "dev"
+    name        = "my-bucket"
+  }
+
+  # This is the notification configuration for the bucket.
+  notification_configuration {
+    events = [
+      "s3:ObjectCreated:*",
+      "s3:ObjectRemoved:*",
+      "s3:ObjectLifetimeExpired"
+    ]
+
+    # This is the target ARN of the topic.
+    target_arn = "arn:aws:sns:us-east-1:111111111111:my-topic"
+
+    # This is the protocol to be used for the notification.
+    protocol = "application/json"
+
+    # This is the endpoint to be used for the notification.
+    endpoint = "arn:aws:sns:us-east-1:111111111111:my-topic-endpoint"
+  }
+}
+```
+
+This code creates an S3 bucket with the required attributes. The `bucket` attribute must be set to the desired bucket name. The `acl` attribute defines the access control for the bucket. The `location` attribute defines the location of the bucket. The `logging` attribute defines the logging configuration for the bucket. The `public_access_block_configuration` attribute defines the public access block to control public access to the bucket. The `public_access_block_configuration` attribute has five options: `block_public_acls`, `block_public_policy`, `ignore_public_acls`, `restrict_public_buckets`, and `log_public_acls`. The `notification_configuration` attribute defines the notification configuration for the bucket. The `events` attribute defines the events to be used for the notification. The `target_arn` attribute defines the target ARN of the topic. The `protocol` attribute defines the protocol to be used for the notification. The `endpoint` attribute defines the endpoint to be used for the notification.

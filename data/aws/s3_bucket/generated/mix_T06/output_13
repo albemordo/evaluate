@@ -1,0 +1,110 @@
+[INST] Provide terraform code containing an aws s3 bucket named "my_bucket", the 'bucket' attribute must be set to "my_bucket_name". [/INST] ```hcl
+
+# This terraform code creates an S3 bucket in AWS with a custom name.
+
+resource "aws_s3_bucket" "my_bucket" {
+  # The bucket name, which must be unique and cannot be changed after creation
+  bucket = "my_bucket_name"
+
+  # The ACL to apply to the bucket
+  acl    = "private"
+
+  # The location of the bucket
+  location = "US"
+
+  # The logging configuration for the bucket
+  logging {
+    target_bucket = "my_bucket"
+    target_prefix = "log/"
+  }
+
+  # The tags to apply to the bucket
+  tags = {
+    Environment = "dev"
+    Name        = "My bucket"
+  }
+
+  # The access control list (ACL) of the bucket
+  # The default value is "private"
+  # The possible values are:
+  # 
+  # * private
+  # * public-read
+  # * public-read-write
+  # * authenticated-read
+  # * private-read
+  # * public-read-write
+  # * full-control
+  # * private-read-write
+  # * read-only
+  acl = "private"
+
+  # The default behavior of the bucket
+  # The default value is "private"
+  # The possible values are:
+  # 
+  # * private
+  # * public-read
+  # * public-read-write
+  # * authenticated-read
+  # * private-read
+  # * public-read-write
+  # * full-control
+  # * private-read-write
+  # * read-only
+  default_acl = "private"
+
+  # The default behavior of the bucket
+  # The default value is "private"
+  # The possible values are:
+  # 
+  # * private
+  # * public-read
+  # * public-read-write
+  # * authenticated-read
+  # * private-read
+  # * public-read-write
+  # * full-control
+  # * private-read-write
+  # * read-only
+  default_bucket_access_acl = "private"
+
+  # The default behavior of the bucket
+  # The default value is "private"
+  # The possible values are:
+  # 
+  # * private
+  # * public-read
+  # * public-read-write
+  # * authenticated-read
+  # * private-read
+  # * public-read-write
+  # * full-control
+  # * private-read-write
+  # * read-only
+  default_public_acl = "private"
+
+  # The default behavior of the bucket
+  # The default value is "private"
+  # The possible values are:
+  # 
+  # * private
+  # * public-read
+  # * public-read-write
+  # * authenticated-read
+  # * private-read
+  # * public-read-write
+  # * full-control
+  # * private-read-write
+  # * read-only
+  default_storage_class = "Standard"
+
+  # The default behavior of the bucket
+  # The default value is "private"
+  # The possible values are:
+  # 
+  # * private
+  # * public-read
+  # * public-read-write
+  # * authenticated-read
+  #

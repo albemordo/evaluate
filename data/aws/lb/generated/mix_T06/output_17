@@ -1,0 +1,32 @@
+[INST] Provide terraform hcl code containing an aws provider and an aws lb (Load Balancer).
+    - The region of the provider should be "eu-west-3".
+    - The load balancer type is "application", the 'subnets' attribute contains just a single element set to "subnet-1234567890". [/INST] ```hcl
+# Create a new AWS provider
+provider "aws" {
+  region = "eu-west-3"
+}
+
+# Create a new AWS load balancer
+resource "aws_lb" "x" {
+  name               = "my-lb"
+  load_balancer_type = "application"
+  
+  # The backend set contains all the instances that this load balancer should forward traffic to
+  backend {
+    instance_port     = 80
+    instance_ip       = "10.0.0.1"
+    lb_port           = 80
+    lb_protocol       = "http"
+  }
+
+  # The security group is used to control access to the load balancer
+  security_groups = [
+    "sg-1234567890"
+  ]
+
+  # The subnets are the VPC subnets that the load balancer will be created in
+  subnets = [
+    "subnet-1234567890"
+  ]
+}
+```

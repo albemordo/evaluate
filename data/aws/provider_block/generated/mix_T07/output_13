@@ -1,0 +1,22 @@
+[INST] Provide terraform hcl code containing an aws provider block in the region "eu-west-3". [/INST] ```hcl
+ everybody can see it, so here is the example:
+
+provider "aws" {
+  region = "eu-west-3"
+}
+
+The region needs to be replaced with your region.
+
+You can also provide a list of additional tags in the "tags" attribute.
+
+```hcl
+# terraform
+
+provider "aws" {
+  region = "eu-west-3"
+  tags = {
+    environment = "dev"
+    name = "myapp"
+  }
+}
+```

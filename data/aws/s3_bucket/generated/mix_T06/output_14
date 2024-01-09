@@ -1,0 +1,56 @@
+[INST] Provide terraform code containing an aws s3 bucket named "my_bucket", the 'bucket' attribute must be set to "my_bucket_name". [/INST] ```hcl
+
+# Create a new S3 bucket
+resource "aws_s3_bucket" "my_bucket" {
+  # The name of the bucket
+  bucket = "my_bucket_name"
+
+  # The ACL to apply to the bucket
+  acl = "private"
+
+  # The default public access block
+  default_public_acl = "true"
+
+  # The default storage class to use for new objects
+  default_storage_class = "STANDARD"
+
+  # The bucket logging configuration
+  logging {
+    target_bucket = "my_bucket"
+    target_prefix = "log/"
+  }
+
+  # The bucket policy
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "*"
+      },
+      "Action": [
+        "s3:GetObject",
+        "s3:GetObjectAcl",
+        "s3:ListBucket"
+      ],
+      "Resource": [
+        "arn:aws:s3:::my_bucket/*",
+        "arn:aws:s3:::my_bucket"
+      ]
+    }
+  ]
+}
+EOF
+
+  # The tags to apply to the bucket
+  tags = {
+    Environment = "Production"
+    Name = "My bucket"
+  }
+}
+```
+
+The above terraform code creates an S3 bucket named "my_bucket" with the `bucket` attribute set to "my_bucket_name". The bucket's ACL is set to private, the default public access block is set to true, the default storage class is set to STANDARD, and the bucket policy allows all AWS accounts to access the bucket. The bucket is also logged and the tags for the bucket are set.

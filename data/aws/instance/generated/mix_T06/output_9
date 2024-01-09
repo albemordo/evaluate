@@ -1,0 +1,32 @@
+[INST] Provide terraform hcl code to create an aws instance of size 't2.micro' with the ami set to 'ami-1234567890', the vpc is 'sg-abcde12345'. 
+Also set up the aws provider in the region "eu-west-3". [/INST] ```hcl
+# This terraform configuration creates a new EC2 instance in the EU-WEST-3 region
+# with a t2.micro size, an AMI of 'ami-1234567890', and a VPC of 'sg-abcde12345'.
+
+provider "aws" {
+  region = "eu-west-3"
+}
+
+resource "aws_instance" "example" {
+  # The size of the instance
+  instance_type = "t2.micro"
+
+  # The AMI to use
+  ami = "ami-1234567890"
+
+  # The VPC the instance will be in
+  vpc_security_group_ids = ["sg-abcde12345"]
+
+  # The subnet the instance will be in
+  subnet_id = "subnet-abcde12345"
+
+  # The key pair to use for the instance
+  key_name = "keypair-abcde12345"
+
+  # The user data to be passed to the instance
+  user_data = "This is my user data"
+
+  # The amount of time to wait for the instance to reach a running state
+  timeouts {}
+}
+```

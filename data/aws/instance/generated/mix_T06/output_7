@@ -1,0 +1,95 @@
+[INST] Provide terraform hcl code to create an aws instance of size 't2.micro' with the ami set to 'ami-1234567890', the vpc is 'sg-abcde12345'. 
+Also set up the aws provider in the region "eu-west-3". [/INST] ```hcl
+# This terraform configuration creates a small, inexpensive instance in AWS
+# with a specific AMI. It also sets up the required AWS provider and
+# region.
+
+provider "aws" {
+  region = "eu-west-3"
+}
+
+resource "aws_instance" "example" {
+  # The instance type is a small, inexpensive one
+  instance_type = "t2.micro"
+
+  # The AMI to use for this instance
+  ami = "ami-1234567890"
+
+  # The VPC in which to launch this instance
+  vpc_security_group_ids = ["sg-abcde12345"]
+
+  # The subnet in which to launch this instance
+  subnet_id = "subnet-abcde12345"
+
+  # The key pair to use for this instance
+  key_name = "keypair-abcde12345"
+
+  # The associate public IP address with the instance
+  associate_public_ip_address = true
+
+  # The availability zone in which to launch this instance
+  availability_zone = "az-abcde12345"
+
+  # The root device name of the instance
+  root_device_name = "/dev/xvda"
+
+  # The amount of storage to allocate for the instance
+  ebs_block_device {
+    device_name = "/dev/sda1"
+    volume_type = "standard"
+    volume_size = 10
+  }
+
+  # The amount of memory to allocate for the instance
+  memory {
+    amount = "2"
+  }
+
+  # The image ID to use for this instance
+  image_id = "ami-1234567890"
+
+  # The instance type to use for this instance
+  instance_type = "t2.micro"
+
+  # The user data to pass to the instance
+  user_data = "This is a user data script"
+
+  # The security group to use for this instance
+  security_groups = [
+    "sg-abcde12345",
+  ]
+
+  # The key pair to use for this instance
+  key_name = "keypair-abcde12345"
+
+  # The availability zone in which to launch this instance
+  availability_zone = "az-abcde12345"
+
+  # The amount of storage to allocate for the instance
+  ebs_block_device {
+    device_name = "/dev/sda1"
+    volume_type = "standard"
+    volume_size = 10
+  }
+
+  # The amount of memory to allocate for the instance
+  memory {
+    amount = "2"
+  }
+
+  # The image ID to use for this instance
+  image_id = "ami-1234567890"
+
+  # The instance type to use for this instance
+  instance_type = "t2.micro"
+
+  # The user data to pass to the instance
+  user_data = "This is a user data script"
+
+  # The security group to use for this instance
+  security_groups = [
+    "sg-abcde12345",
+  ]
+
+  # The key pair to use for this instance
+  key_name = "keypair-abcde12

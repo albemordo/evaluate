@@ -1,0 +1,15 @@
+[INST] Provide terraform code containing an aws s3 bucket named "my_bucket", the 'bucket' attribute must be set to "my_bucket_name". [/INST] ```hcl
+ nobody_home
+├── .terraform.tfstate
+├── .terraform.tfstate.backup
+├── .terraform.tfstate.backup.2023-02-21T13:20:02.345Z
+├── .terraform.tfstate.backup.2023-02-21T13:20:02.345Z.backup
+├── .terraform.tfstate.backup.2023-02-21T13:20:02.345Z.backup.backup
+├── .terraform.tfstate.backup.2023-02-21T13:20:02.345Z.backup.backup.backup
+├── aws
+│   ├── s3
+│   │   ├── bucket.tf
+│   │   └── bucket.tf.backup
+│   └── s3.tf
+└── aws.tf
+```

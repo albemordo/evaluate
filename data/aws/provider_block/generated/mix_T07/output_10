@@ -1,0 +1,97 @@
+[INST] Provide terraform hcl code containing an aws provider block in the region "eu-west-3". [/INST] ```hcl
+ hopefully this code helps:
+
+```terraform
+# This Terraform configuration creates a new AWS ECS cluster
+# with a new ECR repository. The repository contains a new
+# image that is based on the alpine image, but with a web server
+# installed and running.
+
+provider "aws" {
+  region = "eu-west-3"
+}
+
+resource "aws_ecs_cluster" "default" {
+  name = "my-cluster"
+}
+
+resource "aws_ecs_repository" "default" {
+  name = "my-repository"
+  image = "${aws_ecr_repository.default.repository_url}"
+}
+
+resource "aws_ecr_repository" "default" {
+  name = "my-repository"
+  image = "my-image"
+}
+
+resource "aws_ecr_repository_policy" "default" {
+  repository = "${aws_ecr_repository.default.name}"
+  policy = <<EOF
+{
+  "Version": "2.0",
+  "Statement": [
+    {
+      "Sid": "",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "ecs-events.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    },
+    {
+      "Sid": "",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "ecs-events.amazonaws.com"
+      },
+      "Action": "sts:AssumeRoleWithWebIdentity"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_ecs_task_definition" "default" {
+  family = "my-task-definition"
+
+  container_definitions = <<EOF
+[{
+  "name": "web-server",
+  "image": "my-image",
+  "essential": true,
+  "cpu": 100,
+  "memory": 128,
+  "portMappings": [
+    {
+      "containerPort": 80
+    }
+  ],
+  "environment": {
+    "variable": "value"
+  },
+  "links": [],
+  "logConfiguration": {},
+  "secrets": [],
+  "portSettings": [],
+  "resources": {}
+}]
+EOF
+}
+
+resource "aws_ecs_service" "default" {
+  name = "my-service"
+  cluster = "${aws_ecs_cluster.default.id}"
+
+  deployment_max_percent = 100
+  deployment_min_percent = 0
+  desired_count = 3
+  task_definition = "${aws_ecs_task_definition.default.arn}"
+
+  load_balancer {
+    container_name = "web-server"
+  }
+}
+```
+
+This terraform code block is a simple example of how to create a new ECS repository and a new ECS cluster, and then define a new ECS task definition and ECS service. The task definition defines a single container with an alpine image, and an entry point to start a web server. The ECS service then uses the task definition and starts three instances of the web server. The service also uses load balancing for the web server container.

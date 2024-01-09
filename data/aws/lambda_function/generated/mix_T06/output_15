@@ -1,0 +1,16 @@
+[INST] Provide terraform hcl code to set up an aws lambda function. The block name is "my_lambda", the code (filename attribute) is located at "lambda_function_payload.zip", the function_name should be set to "lambda_function_name". The policy (role) must be "arn:aws:lambda:eu-west-3:123456789012:function:lambda_function_name", while the runtime is nodejs18.x and the handler is "index.test".
+Also provide the aws provider in the region "eu-west-3". [/INST] ```hcl
+resource "aws_lambda_function" "my_lambda" {
+  function_name = "lambda_function_name"
+  filename      = "lambda_function_payload.zip"
+  role          = "arn:aws:lambda:eu-west-3:123456789012:function:lambda_function_name"
+  handler       = "index.test"
+  runtime       = "nodejs18.x"
+  source_code_hash = filebase64sha256("lambda_function_payload.zip")
+  provider      = aws.eu-west-3
+}
+
+provider "aws" {
+  region = "eu-west-3"
+}
+```

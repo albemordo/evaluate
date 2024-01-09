@@ -1,0 +1,8 @@
+[INST] Provide terraform hcl code containing an aws provider block in the region "eu-west-3". [/INST] ```hcl
+ nobody knows that the provider is in "eu-west-3". That's why you should use the region in the provider block.
+
+```hcl
+provider "aws" {
+  region = "eu-west-3"
+}
+```

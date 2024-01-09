@@ -1,0 +1,110 @@
+[INST] Provide terraform code containing an aws s3 bucket named "my_bucket", the 'bucket' attribute must be set to "my_bucket_name". [/INST] ```hcl
+ everyone.
+
+# This terraform code is to create a S3 bucket on AWS with a custom name.
+
+resource "aws_s3_bucket" "my_bucket" {
+  # The bucket name, in this case, it's my_bucket_name.
+  bucket = "my_bucket_name"
+
+  # The ACL to apply to the bucket.
+  acl = "private"
+
+  # The policy to apply to the bucket.
+  policy = <<EOF
+{
+  "Version": "2008-10-17",
+  "Statement": [
+    {
+      "Sid": "",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "*"
+      },
+      "Action": "s3:*",
+      "Resource": "arn:aws:s3:::my_bucket_name/*"
+    }
+  ]
+}
+EOF
+
+  # Enable versioning on the bucket.
+  versioning {
+    enabled = true
+  }
+
+  # Enable public access block on the bucket.
+  public_access_block_configuration {
+    block_public_acls = true
+    block_public_policy = true
+    ignore_public_acls = true
+    restrict_public_buckets = true
+  }
+
+  # Enable server-side encryption by default.
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
+    }
+  }
+
+  # Enable logging.
+  logging {
+    target_bucket = "my_bucket_name"
+    target_prefix = "my_bucket_name/"
+  }
+
+  # Enable public access block on the bucket.
+  public_access_block_configuration {
+    block_public_acls = true
+    block_public_policy = true
+    ignore_public_acls = true
+    restrict_public_buckets = true
+  }
+
+  # Enable server-side encryption by default.
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
+    }
+  }
+
+  # Enable logging.
+  logging {
+    target_bucket = "my_bucket_name"
+    target_prefix = "my_bucket_name/"
+  }
+
+  # Enable versioning on the bucket.
+  versioning {
+    enabled = true
+  }
+
+  # Enable public access block on the bucket.
+  public_access_block_configuration {
+    block_public_acls = true
+    block_public_policy = true
+    ignore_public_acls = true
+    restrict_public_buckets = true
+  }
+
+  # Enable server-side encryption by default.
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
+    }
+  }
+
+  # Enable logging.
+  logging {
+    target_bucket = "my_bucket_name"
+    target_prefix = "my_bucket_name/"
+  }
+}
+```

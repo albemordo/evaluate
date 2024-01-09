@@ -1,0 +1,69 @@
+[INST] Provide terraform code containing just the aws provider in the region "eu-west-3". [/INST] ```hcl
+
+provider "aws" {
+  region = "eu-west-3"
+}
+
+# This terraform configuration file is for the AWS provider. It defines the
+# required provider and its configuration.
+
+provider "aws" {
+  region = "eu-west-3"
+}
+
+resource "aws_instance" "example" {
+  # This is the default AWS region for the instance.
+  # You can change it by specifying a different region in the provider configuration.
+  region = "eu-west-3"
+
+  # This is the default AWS availability zone for the instance.
+  # You can change it by specifying a different zone in the provider configuration.
+  availability_zone = "eu-west-3a"
+
+  # This is the default AWS machine image for the instance.
+  # You can change it by specifying a different image in the provider configuration.
+  image = "ami-06745b1e6a120e90e"
+
+  # This is the default AWS instance type for the instance.
+  # You can change it by specifying a different type in the provider configuration.
+  instance_type = "t2.micro"
+
+  # This is the default AWS security group for the instance.
+  # You can change it by specifying a different security group in the provider configuration.
+  security_groups = ["sg-0123456789abcdef0"]
+
+  # This is the default AWS key pair for the instance.
+  # You can change it by specifying a different key pair in the provider configuration.
+  key_name = "keypair-0123456789abcdef0"
+
+  # This is the default AWS subnet for the instance.
+  # You can change it by specifying a different subnet in the provider configuration.
+  subnet_id = "subnet-0123456789abcdef0"
+
+  # This is the default AWS availability zone for the instance.
+  # You can change it by specifying a different zone in the provider configuration.
+  availability_zone = "eu-west-3a"
+
+  # This is the default AWS machine image for the instance.
+  # You can change it by specifying a different image in the provider configuration.
+  image = "ami-06745b1e6a120e90e"
+
+  # This is the default AWS instance type for the instance.
+  # You can change it by specifying a different type in the provider configuration.
+  instance_type = "t2.micro"
+
+  # This is the default AWS security group for the instance.
+  # You can change it by specifying a different security group in the provider configuration.
+  security_groups = ["sg-0123456789abcdef0"]
+
+  # This is the default AWS key pair for the instance.
+  # You can change it by specifying a different key pair in the provider configuration.
+  key_name = "keypair-0123456789abcdef0"
+
+  # This is the default AWS subnet for the instance.
+  # You can change it by specifying a different subnet in the provider configuration.
+  subnet_id = "subnet-0123456789abcdef0"
+
+  # This is the default AWS availability zone for the instance.
+  # You can change it by specifying a different zone in the provider configuration.
+ 

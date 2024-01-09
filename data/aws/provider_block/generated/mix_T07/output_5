@@ -1,0 +1,13 @@
+[INST] Provide terraform hcl code containing an aws provider block in the region "eu-west-3". [/INST] ```hcl
+ nobody_or_roles = [
+    "arn:aws:iam::${local.account_id}:root",
+    "arn:aws:iam::${local.account_id}:role/admin",
+    "arn:aws:iam::${local.account_id}:role/user",
+    "arn:aws:iam::${local.account_id}:role/owner",
+    "arn:aws:iam::${local.account_id}:role/viewer",
+]
+
+provider "aws" {
+  region            = "eu-west-3"
+}
+```
