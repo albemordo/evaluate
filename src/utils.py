@@ -5,6 +5,7 @@ from pathlib import Path
 from simple_parsing import ArgumentParser, ConflictResolution
 from simple_parsing.helpers import field
 import sys
+import numpy as np
 
 
 DEFAULT_DATA_FOLDER = 'data'
@@ -83,3 +84,14 @@ def parse_argv(config: List[Tuple[Type, str]], argv: List[str] = sys.argv):
     [parser.add_arguments(t, s) for t, s in config]
     args, _ = parser.parse_known_args(argv)
     return args
+
+
+def pass_at_k(n, c, k):
+  """
+  :param n: total number of samples
+  :param c: number of correct samples
+  :param k: k in pass@$k$
+  """
+  if n - c < k: return 1.0
+  return 1.0 - np.prod(1.0 - k /
+    np.arange(n - c + 1, n + 1))
