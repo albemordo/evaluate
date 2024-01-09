@@ -54,3 +54,4 @@
 
 # In generale
 Molti test di azure probabilmente falliranno dato che molte risorse, anche quelle "semplici", richiedono una o più dipendenze verso altre risorse.
+Per generare il plan 
