@@ -1,0 +1,11 @@
+[INST] Retrieve terraform code containing a google_cloudfunctions2_function resource named "myfunction" and located in the "us-central1". For the build config, the runtime will be nodejs16 while the entry point "helloHttp". The maximum instance count is 1, the available memory will be 256 Megabytes and the timeout is 60 seconds. [/INST] ```hcl
+resource "google_cloudfunctions2_function" "myfunction" {
+  name        = "myfunction"
+  location    = "us-central1"
+  runtime     = "nodejs16"
+  entry_point = "helloHttp"
+  max_instance_count = 1
+  available_memory = 256
+  timeout        = 60
+}
+```

@@ -1,0 +1,13 @@
+[INST] Produce terraform code for just a single google compute firewall resource named "my_rules" for the project "my-project-name". The firewall must allow the tcp protocol for the ports 80, 8080, 1000-2000. The network is "default. [/INST] ```hcl
+resource "google_compute_firewall" "my_rules" {
+  name    = "my-project-name-my-rules"
+  project = "my-project-name"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["80", "8080", "1000-2000"]
+  }
+
+  network = "default"
+}
+```

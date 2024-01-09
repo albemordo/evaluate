@@ -1,0 +1,17 @@
+[INST] Provide terraform hcl code for a google storage bucket named "my_storage_bucket" and located in the "US".
+Also set up the google provider block for the project "my_project" in the region us-central1. [/INST] ```hcl
+# This is a Terraform configuration file for creating a Google Cloud Storage (GCS) bucket
+# in the US region. The bucket is named "my_storage_bucket" and is located in the "US"
+# region. The provider block for the project "my_project" is also set up in the "us-central1"
+# region.
+
+provider "google" {
+  project = "my_project"
+  region  = "us-central1"
+}
+
+resource "google_storage_bucket" "my_storage_bucket" {
+  name          = "my_storage_bucket"
+  location      = "US"
+}
+```

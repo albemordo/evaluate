@@ -1,0 +1,40 @@
+[INST] Provide terraform hcl code for a google storage bucket designated for hosting a static website with cors rules enabled. The bucket is named "my_bucket" and is located in the EU and the force destroy flag is set. The website index is located at "index.html" while the not found page at "404.html".
+Cors rules are set for the origin "http://image-store.com" and methods GET, PUT, POST, HEAD, DELETE are allowed. Response headers is '*' and the max age is set to 3600. [/INST] ```hcl
+resource "google_storage_bucket" "website-static-bucket" {
+  name          = "my_bucket"
+  location      = "EU"
+  force_destroy = true
+
+  website {
+    main_page_suffix = "index.html"
+    not_found_page   = "404.html"
+  }
+
+  cors {
+    origin_policy = 4
+    cors_rule {
+      max_age_seconds = 86400
+      allow_credentials = true
+      allow_headers = ["Allowed header"]
+      allow_methods = ["Allowed method"]
+      expose_headers = ["Exposed header"]
+      max_age_seconds = 86400
+      is_public_policy = 4
+      origin_policy = 4
+      preflight_method = "Allowed preflight method"
+      response_header = "Response header"
+      response_policy = 4
+      allow_credentials = true
+      allow_headers = ["Allowed header"]
+      allow_methods = ["Allowed method"]
+      expose_headers = ["Exposed header"]
+      max_age_seconds = 86400
+      is_public_policy = 4
+      origin_policy = 4
+      preflight_method = "Allowed preflight method"
+      response_header = "Response header"
+      response_policy = 4
+    }
+  }
+}
+```

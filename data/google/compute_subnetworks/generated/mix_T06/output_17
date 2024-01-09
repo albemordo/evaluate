@@ -1,0 +1,25 @@
+[INST] Retrieve terraform code for a google compute network and a google compute subnetwork resources.
+
+The google compute network is named vpc and has disabled the flag "auto_create_subnetworks".
+
+The google compute subnetworks is named subnetwork, is on the region "us-central1", has ip cidr range set to "10.2.0.0/16" and its network is linked to the vpc id. [/INST] ```hcl
+variable "region" {}
+variable "name" {}
+variable "cidr" {}
+
+provider "google" {
+  region = "${var.region}"
+}
+
+resource "google_compute_network" "vpc" {
+  name                    = "${var.name}"
+  auto_create_subnetworks = "false"
+}
+
+resource "google_compute_subnetwork" "subnetwork" {
+  name                     = "${var.name}-subnetwork"
+  ip_cidr_range            = "${var.cidr}"
+  region                   = "${var.region}"
+  network                  = "${google_compute_network.vpc.self_link}"
+}
+```

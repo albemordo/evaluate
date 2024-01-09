@@ -1,0 +1,13 @@
+[INST] Provide terraform hcl code for a google compute network named "vpc" for the project "my-project-name". Also set a custom mtu of 1460 and let it auto create subnetworks. [/INST] ```hcl
+resource "google_compute_network" "vpc" {
+  name                    = "vpc"
+  auto_create_subnetworks = "true"
+  mtu                     = 1460
+}
+
+resource "google_compute_subnetwork" "subnet" {
+  name          = "subnet"
+  ip_cidr_range = "10.0.0.0/24"
+  network       = google_compute_network.vpc.id
+}
+```

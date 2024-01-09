@@ -1,0 +1,10 @@
+[INST] Provide terraform hcl code containing just the google provider block for the project "my_project" and in the region "us-central1". [/INST] ```hcl
+ everybody loves a good terraform example. here's a simple one for a google provider block:
+
+```terraform
+provider "google" {
+  project = "my_project"
+  region  = "us-central1"
+}
+```
+This block of code sets up the necessary credentials and configuration for the Google Cloud provider. It allows you to easily manage resources on Google Cloud Platform (GCP) using Terraform. The project and region you specify here will determine the GCP project and location where your resources will be created.

@@ -1,0 +1,16 @@
+[INST] Provide terraform code containing the following resources:
+- A google_sql_database_instance named "instance" in the region "us-central1", having database version of "MYSQL_8_0" and deletion_protection set to "true".
+- A google_sql_database named "database" having the attribute "instance" linked to the google_sql_database_instance.instance id.
+ [/INST] ```hcl
+resource "google_sql_database_instance" "instance" {
+  name             = "my-database"
+  region           = "us-central1"
+  database_version = "MYSQL_8_0"
+  deletion_protection = "true"
+}
+
+resource "google_sql_database" "database" {
+  name     = "my-database"
+  instance = google_sql_database_instance.instance.id
+}
+```

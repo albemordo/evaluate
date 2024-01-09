@@ -1,0 +1,9 @@
+[INST] Provide terraform hcl code containing just the google provider block for the project "my_project" and in the region "us-central1". [/INST] ```hcl
+ hopefully this is enough to get you started. You can then add more configurations for the project and region if needed.
+
+```hcl
+provider "google" {
+  project = "my_project"
+  region  = "us-central1"
+}
+```
