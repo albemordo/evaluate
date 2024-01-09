@@ -50,3 +50,7 @@
 # Plan validation
 - Togliere i nomi dei blocchi prima di comparare i piani potrebbe essere una buona soluzione
 - Magari non fare controllo 1:1 -> Per ogni oggetto del plan_target['configuration'] controllare che ci sia un corrispettivo nel piano generato.
+
+
+# In generale
+Molti test di azure probabilmente falliranno dato che molte risorse, anche quelle "semplici", richiedono una o più dipendenze verso altre risorse.
