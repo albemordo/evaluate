@@ -1,0 +1,6 @@
+[INST] Provide terraform hcl code containing a single output block named 'hello_world', the value should be "Hello World!". [/INST] ```hcl
+ nobody_home_dir_file:
+  file:
+    - name: /home/nobody
+      content: 'Hello World!'
+```

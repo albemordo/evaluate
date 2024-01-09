@@ -1,0 +1,9 @@
+[INST] Provide terraform hcl code containing just the azurerm provider with empty features ({}). [/INST] Sure, here's an example of a barebones terraform configuration for the Azure Resource Manager (ARM) provider. It includes the minimum required provider configuration and no other features:
+
+```hcl
+provider "azurerm" {
+  features {}
+}
+```
+
+This configuration will set up the necessary provider for managing Azure resources and will not enable any additional features. It is a good starting point for small-scale projects where you don't need any additional provider features.

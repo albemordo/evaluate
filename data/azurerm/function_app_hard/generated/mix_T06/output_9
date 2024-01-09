@@ -1,0 +1,31 @@
+[INST] Provide terraform hcl code containing the azurerm provider, with empty features ({}), and some resources.
+First, create an azurerm_resource_group named "my_resgroup" located in "West Europe".
+Then, provide an azurerm_service_plan named "my_service_plan", the location is the same as azurerm_service_plan.my_service_plan, while the resource_group_name attribute is linked with the my_resgroup's name. The os type is "Linux" and sku name is "Y1".
+Finally, produce an azurerm_linux_function_app named "my_function_app", having the resource_group_name linked to my_resgroup's name, the location is linked with my_resgroup's location, the service plan id is linked with my_service_plan's id. The site_config block is empty ({}). [/INST] ```hcl
+# Azure Provider Configuration
+provider "azurerm" {
+  features {}
+}
+
+resource "azurerm_resource_group" "my_resgroup" {
+  name     = "my_resgroup"
+  location = "West Europe"
+}
+
+resource "azurerm_service_plan" "my_service_plan" {
+  name                       = "my_service_plan"
+  location                   = azurerm_resource_group.my_resgroup.location
+  resource_group_name        = azurerm_resource_group.my_resgroup.name
+  sku                        = "Y1"
+  os_type                    = "Linux"
+  service_plan_display_name = "my_service_plan"
+}
+
+resource "azurerm_linux_function_app" "my_function_app" {
+  name                = "my_function_app"
+  location            = azurerm_resource_group.my_resgroup.location
+  resource_group_name = azurerm_resource_group.my_resgroup.name
+  service_plan_id     = azurerm_service_plan.my_service_plan.id
+  site_config         = {}
+}
+```

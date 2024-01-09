@@ -1,0 +1,2 @@
+[INST] Provide terraform hcl code containing a single output block named 'hello_world', the value should be "Hello World!". [/INST] ```hcl
+ hopefully that helps you get started with terraform. If you have any other questions, feel free to let me know!

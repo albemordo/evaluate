@@ -1,0 +1,8 @@
+[INST] Provide a terraform hcl configuration containing a variable named 'one_variable' of type string, then set its value to 'content'. [/INST] ```hcl
+ everybody can see your variable 'one_variable'
+
+variable "one_variable" {
+  type = "string"
+  default = "content"
+}
+```

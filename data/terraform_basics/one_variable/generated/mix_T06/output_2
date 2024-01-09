@@ -1,0 +1,2 @@
+[INST] Provide a terraform hcl configuration containing a variable named 'one_variable' of type string, then set its value to 'content'. [/INST] ```hcl
+ hopefully this will help you with your terraform issue. Please let me know if you need any further assistance.

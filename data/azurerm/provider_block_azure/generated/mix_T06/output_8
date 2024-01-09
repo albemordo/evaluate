@@ -1,0 +1,10 @@
+[INST] Provide terraform hcl code containing just the azurerm provider with empty features ({}). [/INST] ```hcl
+ nobody home
+
+# This is a Terraform configuration file for Azure Provider.
+# It's a simple example to get you started with Azure Provider.
+
+provider "azurerm" {
+  features {}
+}
+```

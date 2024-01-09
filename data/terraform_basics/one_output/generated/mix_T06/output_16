@@ -1,0 +1,7 @@
+[INST] Provide terraform hcl code containing a single output block named 'hello_world', the value should be "Hello World!". [/INST] ```hcl
+ everyone loves a good hello world. Here is a simple example of a terraform code block that outputs a hello world message.
+
+ output "hello_world" {
+   value = "Hello World!"
+ }
+```

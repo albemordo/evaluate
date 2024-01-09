@@ -1,0 +1,12 @@
+[INST] Provide terraform hcl code containing just the azurerm provider with empty features ({}). [/INST] ```hcl
+ everyone out there who has been writing terraform code for a while and is sick of writing the same provider block over and over again, here's a little snippet that you can paste into your code to save yourself some time:
+
+```terraform
+provider "azurerm" {
+  features {}
+}
+```
+
+This block of code is a valid provider configuration for the Azure Resource Manager (Azurerm) provider that sets all the features to their default value. This means that if you want to use any of the provider features, you will need to explicitly set them in your code. The { } syntax is a shortcut for "all the other features that I don't care about". 
+
+By using this block, you can save yourself the trouble of writing the same provider block over and over again, and can focus on the more important aspects of your code.

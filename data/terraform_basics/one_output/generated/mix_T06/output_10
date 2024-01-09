@@ -1,0 +1,9 @@
+[INST] Provide terraform hcl code containing a single output block named 'hello_world', the value should be "Hello World!". [/INST] ```hcl
+ nobody = {
+    "hello_world" = "Hello World!"
+}
+
+output "hello_world" {
+    value = nobody["hello_world"]
+}
+```

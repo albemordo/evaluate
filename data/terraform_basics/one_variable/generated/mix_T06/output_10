@@ -1,0 +1,22 @@
+[INST] Provide a terraform hcl configuration containing a variable named 'one_variable' of type string, then set its value to 'content'. [/INST] ```hcl
+ everybody is saying that
+
+```hcl
+variable "one_variable" {
+  type = "string"
+  default = "content"
+}
+```
+
+is bad.
+
+```hcl
+variable "one_variable" {
+  type = "string"
+  default = "content"
+}
+```
+
+is good.
+
+But I can't see the difference. Can you explain it to me?

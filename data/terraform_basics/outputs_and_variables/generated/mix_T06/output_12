@@ -1,0 +1,9 @@
+[INST] Provide terraform code containing a variable named 'variable_1', which the default value is "Hello World!", and an output block named 'output_1' should outputs its content. [/INST] ```hcl
+variable "variable_1" {
+  default = "Hello World!"
+}
+
+output "output_1" {
+  value = "The default value of variable_1 is: 'Hello World!'"
+}
+```

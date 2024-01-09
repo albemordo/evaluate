@@ -1,0 +1,7 @@
+[INST] Provide terraform hcl code containing just the azurerm provider with empty features ({}). [/INST] Sure, here's an example of a `terraform. hopefully this helps.
+
+```hcl
+provider "azurerm" {
+  features {}
+}
+```

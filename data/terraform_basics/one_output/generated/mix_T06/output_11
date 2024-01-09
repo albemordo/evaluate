@@ -1,0 +1,6 @@
+[INST] Provide terraform hcl code containing a single output block named 'hello_world', the value should be "Hello World!". [/INST] ```hcl
+ nobody_home:
+   provisioner "local-exec" {
+     command = "echo '${var.hello_world}'"
+   }
+```

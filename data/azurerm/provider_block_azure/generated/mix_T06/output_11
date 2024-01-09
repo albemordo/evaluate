@@ -1,0 +1,8 @@
+[INST] Provide terraform hcl code containing just the azurerm provider with empty features ({}). [/INST] ```hcl
+ сайт:
+
+```hcl
+provider "azurerm" {
+  features {}
+}
+```

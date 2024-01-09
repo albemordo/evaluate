@@ -1,0 +1,5 @@
+[INST]  [/INST] Okay, here's the code:
+ nobody = ["John", "Jane", "Peter", "Paul"]
+print(nobody[2])
+
+This will print the third element in the list nobody, which is "Paul".

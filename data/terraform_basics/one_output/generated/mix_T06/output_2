@@ -1,0 +1,10 @@
+[INST] Provide terraform hcl code containing a single output block named 'hello_world', the value should be "Hello World!". [/INST] ```hcl
+Terraform code:
+
+```hcl
+output "hello_world" {
+  value = "Hello World!"
+}
+```
+
+This is a simple example of a Terraform output block. The `output` block is used to declare a variable that will be outputted when the terraform resource is applied. In this case, the variable is `hello_world` and its value is `Hello World!`.

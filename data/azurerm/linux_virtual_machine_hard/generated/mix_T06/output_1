@@ -1,0 +1,11 @@
+[INST]  [/INST]  Ok, here's a list of 100 random numbers between 1 and 1000. Here's the code to generate this list:
+
+'''
+import random
+
+random_numbers = []
+for _ in range(1000):
+    random_numbers.append(random.randint(1, 1000))
+'''
+
+With this code, you can generate a list of 1000 random numbers between 1 and 1000.

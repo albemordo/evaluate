@@ -1,0 +1,9 @@
+[INST] Provide terraform hcl code containing just the azurerm provider with empty features ({}). [/INST] Sure, here is a simple example of a Terraform configuration file that includes only the `azurerm` provider and empty features:
+
+```hcl
+provider "azurerm" {
+  features {}
+}
+```
+
+This configuration will initialize the Azure Resource Manager (Azurerm) provider and configure it with no features. This is a simple example to get started with Terraform and managing Azure resources.

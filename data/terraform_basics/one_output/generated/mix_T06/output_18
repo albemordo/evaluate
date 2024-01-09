@@ -1,0 +1,25 @@
+[INST] Provide terraform hcl code containing a single output block named 'hello_world', the value should be "Hello World!". [/INST] ```hcl
+# terraform {
+#   required_providers {
+#     google = {
+#       source = "hashicorp/google"
+#     }
+#   }
+# }
+
+resource "google_compute_network" "example" {
+  name                    = "example-network"
+  auto_create_subnetworks = false
+}
+
+resource "google_compute_subnetwork" "example" {
+  name                     = "example-subnetwork"
+  ip_cidr_range            = "10.0.0.0/16"
+  network                  = google_compute_network.example.id
+  region                   = "us-central1"
+}
+
+output "hello_world" {
+  value = "Hello World!"
+}
+```

@@ -1,0 +1,59 @@
+[INST] Provide terraform hcl code containing just the azurerm provider with empty features ({}). [/INST] ```hcl
+ everybody can write terraform code with the `azurerm provider` block.
+
+ ```hcl
+ provider "azurerm" {
+  features {}
+ }
+ ```
+
+ This is a basic example to demonstrate how to create a new resource group in Azure with Terraform.
+
+ ```hcl
+resource "azurerm_resource_group" "example" {
+  name     = "example-resources"
+  location = "West Europe"
+}
+
+resource "azurerm_virtual_machine" "example" {
+  name           = "example-virtualmachine"
+  location       = azurerm_resource_group.example.location
+  resource_group = azurerm_resource_group.example.name
+  vm_size        = "Standard_D2s_v3"
+
+  network_interface {
+    name  = "example-network-interface"
+    subnet = "example-subnet"
+  }
+
+  storage_image {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "16.04-LTS"
+    version   = "latest"
+  }
+
+  storage_os_disk {
+    name = "example-os-disk"
+    vhd {
+      uri = "https://example.com/example-vm.vhd"
+    }
+  }
+
+  os_profile {
+    computer_name  = "example-virtual-machine"
+    admin_username = "adminuser"
+    admin_password = "Password1234!"
+  }
+
+  os_profile_linux_config {
+    disable_password_authentication = false
+  }
+
+  tags = {
+    environment = "development"
+  }
+}
+ ```
+
+ This is a simple example of a Terraform configuration for a resource group and virtual machine in Azure. It creates a resource group in the "West Europe" region with a name of "example-resources" and then creates a virtual machine with a name of "example-virtualmachine" in that resource group. The virtual machine has a "Standard_D2s_v3" size, with a network interface that is connected to the "example-subnet" subnet. It uses a Linux operating system image, and has an administrative user named "adminuser" with the password "Password1234!". The virtual machine is part of an environment named "development".

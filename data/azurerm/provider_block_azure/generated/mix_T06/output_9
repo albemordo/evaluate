@@ -1,0 +1,9 @@
+[INST] Provide terraform hcl code containing just the azurerm provider with empty features ({}). [/INST] Sure, here's an example of a Terraform configuration file that only includes the `azurerm` provider with empty features:
+
+```terraform
+provider "azurerm" {
+  features {}
+}
+```
+
+This configuration file is a minimal example that only sets up the `azurerm` provider. It does not include any other provider or configuration options.
