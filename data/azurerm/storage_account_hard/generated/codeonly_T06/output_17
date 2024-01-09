@@ -1,0 +1,20 @@
+[INST] Provide terraform hcl to provision an azurerm infrastructure:
+First, the azurerm provider must have empty features ({}) block.
+Then, create an azurerm resource group named "my_resgrup", located in "West Europe".
+Finally, provide an azurerm storage account named "my_storage_account", having resource_group_name linked with my_resgrup's name and location linked with my_resgrup's location. The account tier is Standard and the account replication type is GRS. [/INST]
+provider "azurerm" {
+  features {}
+}
+
+resource "azurerm_resource_group" "my_resgrup" {
+  name = "my_resgrup"
+  location = "West Europe"
+}
+
+resource "azurerm_storage_account" "my_storage_account" {
+  name                     = "my_storage_account"
+  resource_group_name      = azurerm_resource_group.my_resgrup.name
+  location                 = azurerm_resource_group.my_resgrup.location
+  account_tier             = "Standard"
+  account_replication_type = "GRS"
+}

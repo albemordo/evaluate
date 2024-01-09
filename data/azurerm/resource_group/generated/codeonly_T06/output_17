@@ -1,0 +1,12 @@
+[INST] Provide terraform hcl code containing an azurerm resource group named "my_resgroup" and located in "West Europe".
+Also set up the azurerm provider with empty features ({}). [/INST]
+resource "azurerm_resource_group" "my_resgroup" {
+  name     = "my_resgroup"
+  location = "West Europe"
+}
+
+# Configure the Azure Provider
+provider "azurerm" {
+  # The connection string to the Azure account
+  #connection_string = "Your connection string"
+}

@@ -1,0 +1,23 @@
+[INST] Provide terraform hcl code containing an aws iam role resource named "my_role". The attribute 'assume_role_policy' encodes a default policy (using jsonencode()) for the ec2 service.
+Also set up the aws provider in the region "eu-west-3". [/INST]
+resource "aws_iam_role" "my_role" {
+    name = "my_role"
+    assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+EOF
+}
+
+provider "aws" {
+  region = "eu-west-3"
+}

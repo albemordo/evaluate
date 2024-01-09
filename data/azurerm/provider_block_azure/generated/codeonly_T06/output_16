@@ -1,0 +1,45 @@
+[INST] Provide terraform hcl code containing just the azurerm provider with empty features ({}). [/INST]
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = ">= 2.26"
+    }
+  }
+}
+
+provider "azurerm" {
+  # The account to use for the provider.
+  #
+  # If this is not specified, Terraform will use the account credentials
+  # specified in the `credentials` block below.
+  #
+  # If the account is specified, the credentials block will be ignored.
+  #
+  # Changing this forces a new provider to be created.
+  #
+  # The account_key block below will be ignored.
+  #
+  #
+  # If the account is not specified, Terraform will use the account credentials
+  # specified in the `credentials` block below.
+  #
+  # Changing this forces a new provider to be created.
+  #
+  # The account_key block below will be ignored.
+  #
+  #
+}
+
+# The account key to use for the provider.
+#
+# If the account is specified, the account block above will be ignored.
+#
+# If the account is not specified, the account block above will be ignored.
+#
+# Changing this forces a new provider to be created.
+#
+# The account_key block below will be ignored.
+#
+#
+}

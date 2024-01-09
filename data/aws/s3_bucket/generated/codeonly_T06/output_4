@@ -1,0 +1,160 @@
+[INST] Provide terraform code containing an aws s3 bucket named "my_bucket", the 'bucket' attribute must be set to "my_bucket_name". [/INST]
+
+terraform {
+  # This is the AWS access key ID
+  # variable "aws_access_key" {
+  #   type = "string"
+  #   default = ""
+  # }
+
+  # This is the AWS secret key
+  # variable "aws_secret_key" {
+  #   type = "string"
+  #   default = ""
+  # }
+
+  # This is the bucket name
+  # variable "bucket" {
+  #   type = "string"
+  #   default = ""
+  # }
+
+  # This is the bucket region
+  # variable "region" {
+  #   type = "string"
+  #   default = ""
+  # }
+}
+
+# This is the bucket name
+variable "bucket_name" {
+  type = "string"
+}
+
+# This is the bucket region
+variable "region" {
+  type = "string"
+}
+
+# This is the bucket name
+variable "bucket" {
+  type = "string"
+}
+
+# This is the bucket region
+variable "region" {
+  type = "string"
+}
+
+# This is the bucket name
+variable "bucket_name" {
+  type = "string"
+}
+
+# This is the bucket region
+variable "region" {
+  type = "string"
+}
+
+# This is the bucket name
+variable "bucket_name" {
+  type = "string"
+}
+
+# This is the bucket region
+variable "region" {
+  type = "string"
+}
+
+# This is the bucket name
+variable "bucket_name" {
+  type = "string"
+}
+
+# This is the bucket region
+variable "region" {
+  type = "string"
+}
+
+# This is the bucket name
+variable "bucket_name" {
+  type = "string"
+}
+
+# This is the bucket region
+variable "region" {
+  type = "string"
+}
+
+# This is the bucket name
+variable "bucket_name" {
+  type = "string"
+}
+
+# This is the bucket region
+variable "region" {
+  type = "string"
+}
+
+# This is the bucket name
+variable "bucket_name" {
+  type = "string"
+}
+
+# This is the bucket region
+variable "region" {
+  type = "string"
+}
+
+# This is the bucket name
+variable "bucket_name" {
+  type = "string"
+}
+
+# This is the bucket region
+variable "region" {
+  type = "string"
+}
+
+# This is the bucket name
+variable "bucket_name" {
+  type = "string"
+}
+
+# This is the bucket region
+variable "region" {
+  type = "string"
+}
+
+# This is the bucket name
+variable "bucket_name" {
+  type = "string"
+}
+
+# This is the bucket region
+variable "region" {
+  type = "string"
+}
+
+# This is the bucket name
+variable "bucket_name" {
+  type = "string"
+}
+
+# This is the bucket region
+variable "region" {
+  type = "string"
+}
+
+# This is the bucket name
+variable "bucket_name" {
+  type = "string"
+}
+
+# This is the bucket region
+variable "region" {
+  type = "string"
+}
+
+# This is the bucket name
+variable "bucket_

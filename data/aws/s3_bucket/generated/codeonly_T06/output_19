@@ -1,0 +1,98 @@
+[INST] Provide terraform code containing an aws s3 bucket named "my_bucket", the 'bucket' attribute must be set to "my_bucket_name". [/INST]
+
+terraform {
+  # backend "s3" {
+  #   bucket = "my_bucket"
+  #   key    = "my_bucket_name"
+  # }
+}
+
+# https://www.terraform.io/docs/configuration/terraform.html#backend-config
+# terraform {
+#   backend "s3" {
+#     bucket = "my_bucket"
+#     key    = "my_bucket_name"
+#   }
+# }
+
+# https://www.terraform.io/docs/configuration/terraform.html#backend-config
+# terraform {
+#   backend "s3" {
+#     bucket = "my_bucket"
+#     key    = "my_bucket_name"
+#   }
+# }
+
+# https://www.terraform.io/docs/configuration/terraform.html#backend-config
+# terraform {
+#   backend "s3" {
+#     bucket = "my_bucket"
+#     key    = "my_bucket_name"
+#   }
+# }
+
+# https://www.terraform.io/docs/configuration/terraform.html#backend-config
+# terraform {
+#   backend "s3" {
+#     bucket = "my_bucket"
+#     key    = "my_bucket_name"
+#   }
+# }
+
+# https://www.terraform.io/docs/configuration/terraform.html#backend-config
+# terraform {
+#   backend "s3" {
+#     bucket = "my_bucket"
+#     key    = "my_bucket_name"
+#   }
+# }
+
+# https://www.terraform.io/docs/configuration/terraform.html#backend-config
+# terraform {
+#   backend "s3" {
+#     bucket = "my_bucket"
+#     key    = "my_bucket_name"
+#   }
+# }
+
+# https://www.terraform.io/docs/configuration/terraform.html#backend-config
+# terraform {
+#   backend "s3" {
+#     bucket = "my_bucket"
+#     key    = "my_bucket_name"
+#   }
+# }
+
+# https://www.terraform.io/docs/configuration/terraform.html#backend-config
+# terraform {
+#   backend "s3" {
+#     bucket = "my_bucket"
+#     key    = "my_bucket_name"
+#   }
+# }
+
+# https://www.terraform.io/docs/configuration/terraform.html#backend-config
+# terraform {
+#   backend "s3" {
+#     bucket = "my_bucket"
+#     key    = "my_bucket_name"
+#   }
+# }
+
+# https://www.terraform.io/docs/configuration/terraform.html#backend-config
+# terraform {
+#   backend "s3" {
+#     bucket = "my_bucket"
+#     key    = "my_bucket_name"
+#   }
+# }
+
+# https://www.terraform.io/docs/configuration/terraform.html#backend-config
+# terraform {
+#   backend "s3" {
+#     bucket = "my_bucket"
+#     key    = "my_bucket_name"
+#   }
+# }
+
+# https://www.

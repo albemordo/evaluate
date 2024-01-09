@@ -1,0 +1,18 @@
+[INST] Provide terraform code containing some azurerm resources:
+The first is the azurerm provider, with empty features ({}) block.
+The second one is an azurerm resource group named "my_resgroup" and located in "West Europe".
+The last one is an azurerm network security group named "my_secgroup" and the location linked with my_resgroup's location, while the resource_group_name is linked to my_resgroup's name. [/INST]
+provider "azurerm" {
+  features {}
+}
+
+resource "azurerm_resource_group" "my_resgroup" {
+  name     = "my_resgroup"
+  location = "West Europe"
+}
+
+resource "azurerm_network_security_group" "my_secgroup" {
+  location                    = azurerm_resource_group.my_resgroup.location
+  name                        = "my_secgroup"
+  resource_group_name         = azurerm_resource_group.my_resgroup.name
+}

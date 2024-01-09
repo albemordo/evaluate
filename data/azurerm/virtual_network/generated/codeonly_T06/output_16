@@ -1,0 +1,46 @@
+[INST] Provide terraform code containing the azurerm provider and two resources: azurerm resource group and azurerm virtual network.
+The provider has empty features ({}) block.
+The azurerm resource group is named "my_resgroup" and located in "West Europe".
+The azurerm virtual network is named "my_vpc" and the address_space attribute is a list containing just "10.0.0.0/16". The location is linked with my_resgroup's location and the resource group name is linked with my_resgroup's name. [/INST]
+provider "azurerm" {
+  # This is the Azure Provider Version
+  #  # We are using the Azure Provider Version 1.26.0
+  #  # We are using the Azure Provider Version 1.25.0
+  #  # We are using the Azure Provider Version 1.24.0
+  #  # We are using the Azure Provider Version 1.23.0
+  #  # We are using the Azure Provider Version 1.22.0
+  #  # We are using the Azure Provider Version 1.21.0
+  #  # We are using the Azure Provider Version 1.20.0
+  #  # We are using the Azure Provider Version 1.19.0
+  #  # We are using the Azure Provider Version 1.18.0
+  #  # We are using the Azure Provider Version 1.17.0
+  #  # We are using the Azure Provider Version 1.16.0
+  #  # We are using the Azure Provider Version 1.15.0
+  #  # We are using the Azure Provider Version 1.14.0
+  #  # We are using the Azure Provider Version 1.13.0
+  #  # We are using the Azure Provider Version 1.12.0
+  #  # We are using the Azure Provider Version 1.11.0
+  #  # We are using the Azure Provider Version 1.10.0
+  #  # We are using the Azure Provider Version 1.9.0
+  #  # We are using the Azure Provider Version 1.8.0
+  #  # We are using the Azure Provider Version 1.7.0
+  #  # We are using the Azure Provider Version 1.6.0
+  #  # We are using the Azure Provider Version 1.5.0
+  #  # We are using the Azure Provider Version 1.4.0
+  #  # We are using the Azure Provider Version 1.3.0
+  #  # We are using the Azure Provider Version 1.2.0
+  #  # We are using the Azure Provider Version 1.1.0
+  #  # We are using the Azure Provider Version 1.0.0
+  #  # We are using the Azure Provider Version 0.13.0
+  #  # We are using the Azure Provider Version 0.12.0
+  #  # We are using the Azure Provider Version 0.11.0
+  #  # We are using the Azure Provider Version 0.10.0
+  #  # We are using the Azure Provider Version 0.9.0
+  #  # We are using the Azure Provider Version 0.8.0
+  #  # We are using the Azure Provider Version 0.7.0
+  #  # We are using the Azure Provider Version 0.6.0
+  #  # We are using the Azure Provider Version 0.5.0
+  #  # We are using the Azure Provider Version 0.4.0
+  #  # We are using the Azure Provider Version 0.3.0
+  #  # We are using the Azure Provider Version 0.2.0
+  #  # We are using the Azure Provider Version 0.1.0

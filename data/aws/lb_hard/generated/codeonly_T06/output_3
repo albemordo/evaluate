@@ -1,0 +1,9 @@
+[INST] Provide terraform hcl code containing an aws provider, an aws vpc, an aws subnet and an aws lb (Load Balancer).
+
+The provider's region should be set to "eu-west-3".
+
+The aws vpc should be named "my_vpc" and the cidr_block must be set to "10.0.0.0/16".
+
+The aws subnet should be named "my_subnet". The vpc_id should be linked the previous aws_vpc's id, also set the cidr_block to "10.0.1.0/24".
+
+Finally, the aws lb should be named "my_lb", it should be configured for "application" purposes. The 'subnets' attribute contains just a single element linked to the aws_subnet's id. [/INST] # Hello, World

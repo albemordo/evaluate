@@ -1,0 +1,19 @@
+[INST] Provide terraform hcl code containing three variables:
+    - The first one is named 'variable_1' of type string and value set to 'variable_1_content'.
+    - The second one is named 'variable_2' of type bool. Its value must be set to true.
+    - The last one should be named 'variable_3' of type bool. Set its value to false. [/INST]
+
+variable "variable_1" {
+  type = string
+  value = "variable_1_content"
+}
+
+variable "variable_2" {
+  type = bool
+  value = true
+}
+
+variable "variable_3" {
+  type = bool
+  value = false
+}

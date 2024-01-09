@@ -1,0 +1,13 @@
+[INST] Provide terraform hcl code containing just the azurerm provider with empty features ({}). [/INST]
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 2.0"
+    }
+  }
+}
+provider "azurerm" {
+  # Changing the default subscription ID requires a terraform update
+  subscription_id = "REPLACE-WITH-YOUR-SUBSCRIPTION-ID"
+}
