@@ -1,17 +1,15 @@
-provider "azurerm" {
-  features {}
-}
+resource "google_cloudfunctions2_function" "myfunction" {
+  name     = "myfunction"
+  location = "us-central1"
 
-resource "azurerm_resource_group" "my_resgroup" {
-  name     = "example-resources"
-  location = "West Europe"
-}
+  build_config {
+    runtime     = "nodejs16"
+    entry_point = "helloHttp"
+  }
 
-resource "azurerm_storage_account" "my_storage_account" {
-  name                     = "storageaccountname"
-  resource_group_name      = azurerm_resource_group.my_resgroup.name
-  location                 = azurerm_resource_group.my_resgroup.location
-  account_tier             = "Standard"
-  account_replication_type = "GRS"
-
+  service_config {
+    max_instance_count = 1
+    available_memory   = "256M"
+    timeout            = "60s"
+  }
 }
