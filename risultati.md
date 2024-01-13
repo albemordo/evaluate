@@ -31,6 +31,11 @@ Legenda:
 - cloudfunctions2_function: 22111111111111111211; Infenta parametri che non esistono.
 - compute_firewall: 22111212222202122222; Zeri: hello world.
 - compute_instance: 22222020202222222222; Zeri: hello world.
+- compute_subnetworks:   11111111111111111112; Uni: Scriveva google compute network come data block anziché resource -> Vedi se rifare senza cache. 
+- google_prov_block:22022022202022222220: Zeri: non scriveva letteralmente nulla.
+- sql_database:     RIFAI CON NUOVO PROMPT
+- storage_bucket:   22212222202220020222; Zeri: hello world e cose a caso.
+- storage_bucket_website:   00000000000100000000; Zeri: hello world, vedi se rifare senza cache.
 
 
 ## Mix-T06
@@ -55,15 +60,25 @@ Legenda:
 - cloudfunctions2_function: 111111111111111111111; Scrive parametri max_instance_count e altri come parametri sfusi, anziché in service_config {}.
 - compute_firewall: 22224221222222242222. Solo 1 di questi test ha l'attributo "name" settato correttamente. L'ha generato a caso.
 - compute_instance: 22222222222222222222;
+- compute_subnetworks:   22211122212211211221; Uni: scrive "google_compute_network.vpc.self_link" anziché "google_compute_network.vpc.id".
+- google_prov_block:00000000000000000000; Scrive cose a caso prima dell'effettivo codice, tipo ' nobody knows what you're doing. 
+ Please provide a full example of your code. 
+ The provider block alone is not enough to create a Terraform configuration.'.
+- sql_database:    RIFAI CON NUOVO PROMPT.
+- storage_bucket:  22212222222222222222
+- storage_bucket_website:   12211111112212210121; Uni: scriveva '"*"' anziché '["*"]'.
 
 # Considerazioni
 - Alcuni test fallivano perché il prompt non era costruito in modo perfetto: ad esempio in aws_lb veniva erroneamente generato l'attributo "type" e non load_balancer_type
 - Per funzionare è stato necessario mettere le credenziali dei provider che li richiedevano nelle variabili d'ambiente.
 - Modificare la tesi nel capitolo 3 dove parlo di validate e sostituisci con 'fmt', altrimenti i risultati di compile_check e functional_correctness saranno uguali.
 - I modelli, tendenzialmente, non riescono a capire se un attributo(o risorsa) non specificata nel prompt dipende da un altro, e quindi sarebbe necessario crearla. Inoltre non riesce sempre a capire che un attributo vada all'interno di una struttura struct { } a meno che non lo si specifichi nel prompt. Altre volte riescono capire che per alcuni attributi, tipo la regione/zona, crea un blocco provider anziché mettere quei dati negli attributi della risorsa/e (plus).
+- A volte i modelli si inventano gli attributi se trovano delle keyword particolari nel prompt: come scrivere "google_compute_network.vpc.self_link" anziché "google_compute_network.vpc.id" se nel prompt c'è scritto '[...] and its network is linked to the vpc id.'
+- A volte il modello mix, specialmente per i test relativi ai blocchi provider, scrive cose senza senso prima della definizione del codice del provider(che è corretto), facendo fallire i test. Tuttavia molti test dove è stato necessario il blocco provider sono stato compiuti senza questi problemi. Vedi provider_block_google/generated/mix_T06/output_1.
 
-# Eccezzioni
+# Test corretti e non
 Se il controllo del plan non avveniva con successo (fallimenti), i test venivano comunque considerati corretti se:
 - Alcuni attributi, tipo la regione/zona, crea un blocco provider anziché mettere quei dati negli attributi della risorsa/e (plus).
 - Se un attributo doveva essere "X", il codice generato prevedeva l'uso di una variabile, comunque inizializzata con il valore corretto ("X").
 - Negli attributi tipo "name" compariva un suffisso/prefisso generato automaticamente, per dargli un id randomico. Tipo: 'name = "my-instance-${local.name_suffix}"'
+- Un test è considerato corretto per il compile check se `terraform fmt` non da errori.
