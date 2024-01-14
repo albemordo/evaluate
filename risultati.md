@@ -36,6 +36,10 @@ Legenda:
 - sql_database:     RIFAI CON NUOVO PROMPT
 - storage_bucket:   22212222202220020222; Zeri: hello world e cose a caso.
 - storage_bucket_website:   00000000000100000000; Zeri: hello world, vedi se rifare senza cache.
+- few_variables:    11111111111111111111; Uni: scrive "value" anziché "default". Eventualmente rifai con prompt diverso;
+- one_output:       22212222122122121222
+- one_variable:     01110101101111111101; Uni: scrive "value" anziché "default".
+- output_and_variable: 22222222112212122222; Uni: scriveva "value" anziché "default" oppure nel campo "default" c'era scritto "Hello world" anziché il contenuto della variabile.
 
 
 ## Mix-T06
@@ -65,8 +69,12 @@ Legenda:
  Please provide a full example of your code. 
  The provider block alone is not enough to create a Terraform configuration.'.
 - sql_database:    RIFAI CON NUOVO PROMPT.
-- storage_bucket:  22212222222222222222
+- storage_bucket:   22212222222222222222
 - storage_bucket_website:   12211111112212210121; Uni: scriveva '"*"' anziché '["*"]'.
+- few_variables:    11111111111111111111; Uni: scrive "value" anziché "default".
+- one_output:       22202002220002200022; Uni :scriveva cose a caso, come nei singoli provider.
+- one_variable:     10001000100000000001; Uni: scrive il tipo delle varabili tra doppi apici ("string" anziché string). Zeri: scrive cose a caso.
+- output_and_variable:  1111111111111111111111; Scriveva nell'output: `value = "The default value of variable_1 is 'Hello World!'"` anziché sostituire "Hello World!" con `var.variable_1`.
 
 # Considerazioni
 - Alcuni test fallivano perché il prompt non era costruito in modo perfetto: ad esempio in aws_lb veniva erroneamente generato l'attributo "type" e non load_balancer_type
@@ -75,6 +83,8 @@ Legenda:
 - I modelli, tendenzialmente, non riescono a capire se un attributo(o risorsa) non specificata nel prompt dipende da un altro, e quindi sarebbe necessario crearla. Inoltre non riesce sempre a capire che un attributo vada all'interno di una struttura struct { } a meno che non lo si specifichi nel prompt. Altre volte riescono capire che per alcuni attributi, tipo la regione/zona, crea un blocco provider anziché mettere quei dati negli attributi della risorsa/e (plus).
 - A volte i modelli si inventano gli attributi se trovano delle keyword particolari nel prompt: come scrivere "google_compute_network.vpc.self_link" anziché "google_compute_network.vpc.id" se nel prompt c'è scritto '[...] and its network is linked to the vpc id.'
 - A volte il modello mix, specialmente per i test relativi ai blocchi provider, scrive cose senza senso prima della definizione del codice del provider(che è corretto), facendo fallire i test. Tuttavia molti test dove è stato necessario il blocco provider sono stato compiuti senza questi problemi. Vedi provider_block_google/generated/mix_T06/output_1.
+- Sopratutto il modello mix tendeva a produrre codici fallimentari per test che richiedevano solo un blocco, tipo quelli sui singoli blocchi provider/output e variabili.
+- Il modello mix è più propenso a interpretare il prompt anziché seguire le istruzioni alla lettera (come codeonly). Ad esempio nei test di generazione delle varibili il prompt diceva "set its value", ma l'attributo da settare ha il nome "default" e non "value"; mix riusciva a capirlo e scriveva "default".
 
 # Test corretti e non
 Se il controllo del plan non avveniva con successo (fallimenti), i test venivano comunque considerati corretti se:

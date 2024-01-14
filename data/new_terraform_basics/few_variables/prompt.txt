@@ -1,0 +1,4 @@
+Provide terraform hcl code containing three variables:
+    - The first one is named 'variable_1' of type string and its default value set to 'variable_1_content'.
+    - The second one is named 'variable_2' of type bool. Its default value must be set to true.
+    - The last one should be named 'variable_3' of type bool. Set its default value to false.
