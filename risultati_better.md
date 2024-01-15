@@ -1,0 +1,62 @@
+# Codeonly T=0.6
+- apigatewayv2_api: 11001211010111101021; None=6; Compile=11; Func=3
+- dynamodb_table: 00000000000000000000; None=20
+- iam_role: 22222222202222222202; None=2; Func=18
+- instance: 22200202220022000002; None=7; Func=13
+- lambda: 02020111112022102122; None=5; Compile=7; Func=8
+- lambda_hard: 42002002022202000022; None=8; Func=9; FuncSubset=3
+- lb: 11111111111111111111; Compile=20
+- lb_hard: 33311111123331112000; None=5; Compile=10; Func=2; Almost=3
+- aws_provider: 022202222000020222202; None=8; Func=12
+- s3_bucket: 0000000002; None=9; Func=1
+- vpc: 22222222220222222222; Func=19; None=1
+- function_app_hard: 01000000000000000000; None=19; Compile=1
+- provider_block_azure: 00022021111111200000; None=10; Compile=7; Func=3
+- resource_group: 11111111200020200000; None=10; Compile=7; Func=3
+- security_group: 00000022220102122122; None=6; Compile=3; Func=11
+- storage_account: 00022002020202000200; None=13; Func=7
+- subnet: 02000000000000020200; None=17; Func=3
+- virtual_network: 02222202202211112121; None=1; Compile=7; Func=12
+- cloudfunctions2_function: 22111111111111111211; Compile=16; Func=4
+- compute_firewall: 22111212222202122222; None=1; Compile=5; Func=14
+- compute_instance: 22222020202222222222; None=2; Func=18
+- compute_subnetworks: 11111111111111111112; Compile=19; Func=1 
+- google_prov_block: 22022022202022222220; None=2; Func=18
+- sql_database: None=0; Compile=0; Func=0 (Non contarlo o rifai)
+- storage_bucket: 22212222202220020222; None=5; Compile=2; Func=13
+- storage_bucket_website: 00000000000100000000; None=19; Compile=1
+- few_variables: 11111111111111111111; Compile=20
+- one_output: 22212222122122121222; Compile=7; Func=13
+- one_variable: 01110101101111111101; None=3; Compile=17
+- output_and_variable: 22222222112212122222; Compile=5; Func=15
+
+# Mix T=0.6
+- apigatewayv2_api: 3333322333332323331; Compile=1; Func=6; Almost=13
+- dynamodb_table: 21221022222222122222; Compile=1; Func=18; Almost=1; 
+- iam_role: 22212222222222222112; Compile=2; Func=17; Almost=1; 
+- instance: 22124241412222431122; Compile=2; Func=11; Almost=2; FuncSubset=5
+- lambda: 01220111011111411111; None=1; Compile=10; Func=6; FuncSubset=3
+- lambda_hard: 02020111112022102122; None=5; Compile=7; Func=8; 
+- lb: 22222222202202224222; None=2; Func=16; FuncSubset=2
+- lb_hard: 32223332322233233323; Func=11; Almost=9; 
+- aws_provider: 00000000000000000000; None=20; 
+- s3_bucket: 0000000002; None=9; Func=1; 
+- vpc: 24222222222210222224; None=1; Compile=1; Func=16; FuncSubset=2
+- function_app_hard: 00000000000000000000; None=20; 
+- provider_block_azure: 00000220022042200000; None=14; Func=5; FuncSubset=1
+- resource_group: 22222222222222222222; Func=20; 
+- security_group: 22222222222222222222; Func=20; 
+- storage_account: 22222222222242222220; None=1; Func=18; FuncSubset=1
+- subnet: 11111111111111111112; Compile=19; Func=1; 
+- virtual_network: 22222222222212222221; Compile=2; Func=17; FuncSubset=1
+- cloudfunctions2_function: 11111111111111111111; Compile=20; 
+- compute_firewall: 22224221222222242222; Func=18; FuncSubset=2
+- compute_instance: 22222202222022222222; Compile=2; Func=18; 
+- compute_subnetworks: 22211122212211211221; Compile=8; Func=11; FuncSubset=1
+- google_prov_block: 00000000000000000000; None=20; 
+- storage_bucket: 22212222222222222222; Compile=2; Func=18; 
+- storage_bucket_website: 12211111112212210121; None=1; Compile=11; Func=8; 
+- few_variables: 11111111111111111111; Compile=20; 
+- one_output: 22202002220002200022; None=6; Func=13; Almost=1; 
+- one_variable: 10001000100000000001; None=16; Compile=3; FuncSubset=1
+- output_and_variable: 11111111111111111111; Compile=20; 

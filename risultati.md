@@ -10,7 +10,7 @@ Legenda:
 - *: vedi se cambiare il prompt.
 ## Codeonly-T06
 
-- *apigatewayv2_api: 11001211010111101021
+- *apigatewayv2_api: 11001211010111101021; Compile 12; Func 2; 
 - *dynamodb_table:  00000000000000000000
 - iam_role:         22222222202222222202
 - instance:         22200202220022000002; Gli "0" sono per la presenza di soli '# Hello world'.
