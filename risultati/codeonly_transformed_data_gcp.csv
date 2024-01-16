@@ -1,0 +1,24 @@
+,test,k,pass@k,pass@k,pass@k,pass@k,provider
+,,,Compile check,Compile check,Functional Correctness,Functional Correctness,
+,,,Llama-2-codeonly,Llama-2-mix,Llama-2-codeonly,Llama-2-mix,
+54,cloudfunctions2_function,1,100.0,100.0,15.0,15.0,google
+55,cloudfunctions2_function,5,100.0,100.0,60.1,60.1,google
+56,cloudfunctions2_function,10,100.0,100.0,89.5,89.5,google
+57,compute_firewall,1,95.0,95.0,70.0,70.0,google
+58,compute_firewall,5,100.0,100.0,100.0,100.0,google
+59,compute_firewall,10,100.0,100.0,100.0,100.0,google
+60,compute_instance,1,85.0,85.0,85.0,85.0,google
+61,compute_instance,5,100.0,100.0,100.0,100.0,google
+62,compute_instance,10,100.0,100.0,100.0,100.0,google
+63,compute_subnetworks,1,100.0,100.0,5.0,5.0,google
+64,compute_subnetworks,5,100.0,100.0,25.0,25.0,google
+65,compute_subnetworks,10,100.0,100.0,50.0,50.0,google
+66,google_prov_block,1,75.0,75.0,75.0,75.0,google
+67,google_prov_block,5,100.0,100.0,100.0,100.0,google
+68,google_prov_block,10,100.0,100.0,100.0,100.0,google
+69,storage_bucket,1,80.0,80.0,75.0,75.0,google
+70,storage_bucket,5,100.0,100.0,100.0,100.0,google
+71,storage_bucket,10,100.0,100.0,100.0,100.0,google
+72,storage_bucket_website,1,5.0,5.0,0.0,0.0,google
+73,storage_bucket_website,5,25.0,25.0,0.0,0.0,google
+74,storage_bucket_website,10,50.0,50.0,0.0,0.0,google

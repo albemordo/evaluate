@@ -1,0 +1,15 @@
+,test,k,pass@k,pass@k,pass@k,pass@k,provider
+,,,Compile check,Compile check,Functional Correctness,Functional Correctness,
+,,,Llama-2-codeonly,Llama-2-mix,Llama-2-codeonly,Llama-2-mix,
+75,few_variables,1,100.0,100.0,0.0,0.0,terraform_basics
+76,few_variables,5,100.0,100.0,0.0,0.0,terraform_basics
+77,few_variables,10,100.0,100.0,0.0,0.0,terraform_basics
+78,one_output,1,55.0,55.0,55.0,55.0,terraform_basics
+79,one_output,5,99.2,99.2,99.2,99.2,terraform_basics
+80,one_output,10,100.0,100.0,100.0,100.0,terraform_basics
+81,one_variable,1,20.0,20.0,0.0,0.0,terraform_basics
+82,one_variable,5,71.8,71.8,0.0,0.0,terraform_basics
+83,one_variable,10,95.7,95.7,0.0,0.0,terraform_basics
+84,output_and_variable,1,100.0,100.0,0.0,0.0,terraform_basics
+85,output_and_variable,5,100.0,100.0,0.0,0.0,terraform_basics
+86,output_and_variable,10,100.0,100.0,0.0,0.0,terraform_basics

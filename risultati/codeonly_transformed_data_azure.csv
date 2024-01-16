@@ -1,0 +1,24 @@
+,test,k,pass@k,pass@k,pass@k,pass@k,provider
+,,,Compile check,Compile check,Functional Correctness,Functional Correctness,
+,,,Llama-2-codeonly,Llama-2-mix,Llama-2-codeonly,Llama-2-mix,
+33,function_app_hard,1,5.0,5.0,0.0,0.0,azurerm
+34,function_app_hard,5,25.0,25.0,0.0,0.0,azurerm
+35,function_app_hard,10,50.0,50.0,0.0,0.0,azurerm
+36,provider_block_azure,1,55.0,55.0,20.0,20.0,azurerm
+37,provider_block_azure,5,99.2,99.2,71.8,71.8,azurerm
+38,provider_block_azure,10,100.0,100.0,95.7,95.7,azurerm
+39,resource_group,1,55.0,55.0,15.0,15.0,azurerm
+40,resource_group,5,99.2,99.2,60.1,60.1,azurerm
+41,resource_group,10,100.0,100.0,89.5,89.5,azurerm
+42,security_group,1,60.0,60.0,45.0,45.0,azurerm
+43,security_group,5,99.6,99.6,97.0,97.0,azurerm
+44,security_group,10,100.0,100.0,100.0,100.0,azurerm
+45,storage_account,1,35.0,35.0,35.0,35.0,azurerm
+46,storage_account,5,91.7,91.7,91.7,91.7,azurerm
+47,storage_account,10,99.8,99.8,99.8,99.8,azurerm
+48,subnet,1,15.0,15.0,15.0,15.0,azurerm
+49,subnet,5,60.1,60.1,60.1,60.1,azurerm
+50,subnet,10,89.5,89.5,89.5,89.5,azurerm
+51,virtual_network,1,85.0,85.0,55.0,55.0,azurerm
+52,virtual_network,5,100.0,100.0,99.2,99.2,azurerm
+53,virtual_network,10,100.0,100.0,100.0,100.0,azurerm

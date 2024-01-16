@@ -1,0 +1,1 @@
+Provide terraform hcl code containing an aws s3 bucket named "my_bucket", the 'bucket' attribute must be set to "my_bucket".
