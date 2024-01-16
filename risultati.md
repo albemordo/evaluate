@@ -89,6 +89,6 @@ Legenda:
 # Test corretti e non
 Se il controllo del plan non avveniva con successo (fallimenti), i test venivano comunque considerati corretti se:
 - Alcuni attributi, tipo la regione/zona, crea un blocco provider anziché mettere quei dati negli attributi della risorsa/e (plus).
-- Se un attributo doveva essere "X", il codice generato prevedeva l'uso di una variabile, comunque inizializzata con il valore corretto ("X").
+- Se un attributo doveva essere "X", e il codice generato prevedeva l'uso di una variabile, comunque inizializzata con il valore corretto ("X").
 - Negli attributi tipo "name" compariva un suffisso/prefisso generato automaticamente, per dargli un id randomico. Tipo: 'name = "my-instance-${local.name_suffix}"'
 - Un test è considerato corretto per il compile check se `terraform fmt` non da errori.
