@@ -1,4 +1,0 @@
-[INST] Provide terraform hcl code for a google storage bucket named "my_storage_bucket" and located in the "US".
-Also set up the google provider block for the project "my_project" in the region us-central1. [/INST]
-
-# Hello, World
