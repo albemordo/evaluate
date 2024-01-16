@@ -1,0 +1,17 @@
+[INST] Provide a terraform hcl configuration containing a variable named 'one_variable' of type string, then set its value to 'content'. [/INST] ```hcl
+ everyone,
+
+ Here is a simple example of a terraform configuration file.
+
+ ```hcl
+ variable "one_variable" {
+     type = "string"
+     default = "content"
+ }
+
+ output "output_variable" {
+     value = "${var.one_variable}"
+ }
+```
+
+ This file defines a variable and a output variable. The variable is of type string and has a default value of "content". The output variable then returns the value of the variable.

@@ -1,0 +1,29 @@
+[INST] Provide terraform code containing an azurerm infrastructure.
+First, create the azurerm provider with empty features ({}) block.
+Then provision an azurerm resource group named "my_resgroup" and located in "West Europe".
+Then, provide an azurerm virtual network is named "my_vpc" and the address_space attribute is a list containing just "10.0.0.0/16". The location is linked with my_resgroup's location and the resource group name is linked with my_resgroup's name.
+Finally, provide an azurerm subnet named "my_subnet", having adress previxes with just "10.0.1.0/24". The resource group name is linked to my_resgroup's name, while the virtual network name is linked to my_vpc's name.  [/INST] ```hcl
+# Azure Provider Configuration
+provider "azurerm" {
+  features {}
+}
+
+resource "azurerm_resource_group" "my_resgroup" {
+  name     = "my_resgroup"
+  location = "West Europe"
+}
+
+resource "azurerm_virtual_network" "my_vpc" {
+  name                = "my_vpc"
+  location            = azurerm_resource_group.my_resgroup.location
+  resource_group_name = azurerm_resource_group.my_resgroup.name
+  address_space       = ["10.0.0.0/16"]
+}
+
+resource "azurerm_subnet" "my_subnet" {
+  name                 = "my_subnet"
+  resource_group_name  = azurerm_resource_group.my_resgroup.name
+  virtual_network_name = azurerm_virtual_network.my_vpc.name
+  address_prefix       = "10.0.1.0/24"
+}
+```
