@@ -1,2 +1,2 @@
 Provide terraform hcl code to create an aws provider and an aws dynamodb table. The region of the provider block must be set to "eu-west-3".
-The dynamodb table block should be named 'my_table', while the field 'name' should be set to "table_1-name", and must contain a single column (attribute) named "Attribute_1" of type string ("S"), this attribute is also the hash key. Also set 'read_capacity' and 'write_capacity' to 1.
+The dynamodb table block should be named 'my_table', and must contain a single column (attribute) named "Attribute_1" of type string ("S"), this attribute is also the hash key. Also set 'read_capacity' and 'write_capacity' to 1.
