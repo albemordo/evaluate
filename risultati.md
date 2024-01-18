@@ -55,7 +55,7 @@ Legenda:
 - s3_bucket:        0000000002-----; Cose a caso, fai senza cache e con prompt diverso.
 - vpc:              24222222222210222224
 - function_app_hard:00000000000000000000; Zeri: come in codeonly.
-- provider_block_azure: 00000220022042200000; Scrive cose a caso negli stippet hcl ma senza senso.
+- provider_block_azure: 00000220022042200000; Scrive cose a caso negli snippet hcl ma senza senso.
 - resource_group:   22222222222222222222;
 - security_group:   22222222222222222222;
 - storage_account:  22222222222242222220;
